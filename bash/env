@@ -1,0 +1,19 @@
+export EDITOR="vim"
+
+# define tool-specific settings
+LS_OPTIONS='--color=yes'
+
+#History settings
+HISTSIZE=100000
+HISTFILESIZE=409600
+#Ignore common commands
+HISTIGNORE=":pwd:id:uptime:resize:ls:clear:history:exit:g"
+#Ignore duplicate entries
+HISTCONTROL=ignoredups:ignorespace
+
+export PYTHONSTARTUP=~/.pythonrc.py
+
+# virtualenvwrapper
+export WORKON_HOME=~/.virtualenvs
+export PROJECT_HOME=~/work
+export PIP_DOWNLOAD_CACHE=~/.pip/cache
