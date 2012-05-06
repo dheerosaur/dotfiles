@@ -1,0 +1,83 @@
+# enable color support for commands
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# ls
+alias lh='ls -lh'
+alias ll='ls -alF'
+alias la='ls -A'
+alias sl='ls'
+
+# cd
+alias ..=" cd .."
+alias cd..=" cd .."
+alias work="cd ~/work"
+alias play="cd ~/play"
+
+# vim
+alias e='vim'
+alias es='vim -o'
+alias ev='vim -O'
+
+#git
+alias g=" git status -sb"
+alias gh="git hist"
+alias gb="git branch"
+alias gd="git diff --color"
+alias gdw="git diff --color-words"
+alias gco="git checkout"
+alias gc-="git checkout --"
+
+alias ga="git add"
+alias gcm="git commit -m"
+alias gcam="git commit -am"
+alias gca="git commit --amend"
+alias gpus="git push"
+alias gpul="git pull"
+alias gsa="git stash"
+alias gitmod="git ls-files -m"
+
+# grep and ack-grep
+alias ack="ack-grep"
+function grepr { 
+    echo; grep -Ri "$*" .
+}
+function greprl { 
+    grep -Ri "$*" | awk -F':' '{ print $1 }'
+}
+function ackr {
+    ack -i "$*"
+}
+function ackl {
+    ack -il "$*"
+}
+
+# find
+function lct {
+    find . -iname "*$**"
+}
+
+# python 
+alias pyserver="python -m SimpleHTTPServer"
+alias ipy="ipython"
+alias sitepack="cdsitepackages"
+
+# django
+alias dj="python manage.py"
+alias djr="dj runserver"
+alias djsh="dj shell"
+alias djshp="dj shell_plus"
+alias djdb="dj dbshell"
+
+# Tools
+alias o="nautilus ."
+alias myip="curl icanhazip.com"
+
