@@ -42,3 +42,71 @@ set foldopen=block,hor,insert,mark,percent,quickfix,search,tag,undo
 
 set history=1000
 set undolevels=1000
+
+" Command overrides
+"---------------------------------------
+command! Q q
+command! W w
+command! Qall qall
+
+" Maps
+"---------------------------------------
+nmap <leader>q :q<CR>
+nmap <leader>ww :w<CR>
+nmap <leader>wq :wq <CR>
+
+" persist visual selection for indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" Next, previous buffers
+nmap <space> :bn<CR>
+nmap <leader><space> :bp<CR>
+
+" Splitting and closing windows 
+nmap <leader>v <C-w>v
+nmap <leader>s <C-w>s
+nmap <leader>x <C-w>c
+nmap <leader>d :bp<CR>:bd#<CR>
+
+" search for word under cursor
+nnoremap <leader><bs> :Ack! '\b<c-r><c-w>\b'<CR>
+
+
+" Move between opened windows
+map <C-j> :CtrlPBuffer<CR>
+map <C-k> :CtrlPMRUFiles<CR>
+
+" Resize windows vertically
+map <C-right> :vertical:resize +5<CR>
+map <C-left> s:vertical:resize -5<CR>
+map <C-up>    :resize +5<CR>
+map <C-down>  :resize -5<CR>
+
+map <leader>y "+yy
+map <leader>p "+p
+
+" Use better characters for tabstops and EOLs, 
+" <C-v> can be used to insert unicode characters
+set listchars=tab:▸\ ,eol:¬
+nmap <leader>l :set list!<CR>
+
+nmap <leader>t :tabe<CR>
+nmap <leader>rc :tabe $MYVIMRC<CR>
+nmap <leader>rs :so $MYVIMRC<CR>
+
+nmap [t :tabp<CR>
+nmap ]t :tabn<CR>
+nmap [q :cprev<CR>
+nmap ]q :cnext<CR>
+
+nmap <leader>bb :e $HOME/.bashrc<CR>
+nmap <leader>ba :e $HOME/bin/dotfiles/bash/aliases<CR>
+nmap <leader>bc :e $HOME/bin/dotfiles/bash/config<CR>
+nmap <leader>be :e $HOME/bin/dotfiles/bash/env<CR>
+nmap <leader>bm :e $HOME/bin/dotfiles/bash/my_aliases<CR>
+nmap <leader>bt :e $HOME/.tmux.conf<CR>
+
