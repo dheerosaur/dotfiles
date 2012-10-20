@@ -148,9 +148,7 @@ nmap ]q :cnext<CR>
 nmap <leader>bb :e $HOME/.bashrc<CR>
 nmap <leader>ba :e $HOME/dotfiles/bash/aliases<CR>
 nmap <leader>bc :e $HOME/dotfiles/bash/config<CR>
-nmap <leader>be :e $HOME/dotfiles/bash/env<CR>
-nmap <leader>bm :e $HOME/dotfiles/bash/my_aliases<CR>
-nmap <leader>bt :e $HOME/.tmux.conf<CR>
+nmap <leader>bl :e $HOME/dotfiles/bash/localrc<CR>
 
 autocmd FileType python map <buffer> <leader>0 :call <SID>StripTrailingWhitespaces()<CR>
 
