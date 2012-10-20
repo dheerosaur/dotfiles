@@ -22,10 +22,29 @@ alias cd..=" cd .."
 alias work="cd ~/work"
 alias play="cd ~/play"
 
-# vim
+# Tools
+alias o="nautilus ."
+alias myip="curl icanhazip.com"
+
+# Telnet
+alias telmem="telnet localhost 11211"
+
+# python aliases
+alias pyserver="python -m SimpleHTTPServer"
+alias ipy="ipython"
+alias sitepack="cdsitepackages"
+
+#vim
 alias e='vim'
 alias es='vim -o'
 alias ev='vim -O'
+
+#django
+alias dj="python manage.py"
+alias djr="dj runserver"
+alias djsh="dj shell"
+alias djshp="dj shell_plus"
+alias djdb="dj dbshell"
 
 #git
 alias g=" git status -sb"
