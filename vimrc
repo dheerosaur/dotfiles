@@ -1,6 +1,34 @@
 set nocompatible        " Use Vim
 filetype off            " required!
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" github repos
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-abolish'
+Bundle 'int3/vim-extradite'
+Bundle 'kien/ctrlp.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/syntastic'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'bingaman/vim-sparkup'
+Bundle 'tsaleh/vim-matchit'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'godlygeek/tabular'
+Bundle 'SirVer/ultisnips'
+Bundle 'gregsexton/MatchTag'
+Bundle 'taglist.vim'
+
+" filetype plugins
+Bundle 'tpope/vim-markdown'
+Bundle 'groenewege/vim-less'
+
 filetype plugin indent on
 syntax on
 
@@ -17,6 +45,8 @@ set laststatus=2
 set noautochdir
 set viewdir=$HOME/.vimviews
 set viewoptions=folds,cursor
+
+set shell=/bin/bash
 
 " soft wrapping
 set wrap
