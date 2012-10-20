@@ -68,6 +68,12 @@ set nohlsearch            " highlights search results
 set wildmenu                            " make tab completion act like bash
 set wildignore=*.swp,*.pyc,*.class      " while tab completing, ignore these files
 
+" save folds
+au BufWinLeave ?* silent! mkview
+au BufWinEnter ?* silent! loadview
+au TabLeave ?* silent! mkview
+au TabEnter ?* silent! loadview
+
 " Folding related
 set foldenable
 set foldlevel=99
