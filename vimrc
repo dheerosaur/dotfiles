@@ -4,6 +4,12 @@ filetype off            " required!
 filetype plugin indent on
 syntax on
 
+" colors
+let g:solarized_contrast = "high"
+set t_Co=256
+set background=dark
+color solarized
+
 set title               " change the terminal's title
 set number              " show line numbers
 set ruler               " show line and column number
@@ -110,3 +116,35 @@ nmap <leader>be :e $HOME/bin/dotfiles/bash/env<CR>
 nmap <leader>bm :e $HOME/bin/dotfiles/bash/my_aliases<CR>
 nmap <leader>bt :e $HOME/.tmux.conf<CR>
 
+autocmd FileType python map <buffer> <leader>0 :call <SID>StripTrailingWhitespaces()<CR>
+
+if has("autocmd")
+    "syntax demands
+    au FileType make setlocal ts=8 sts=8 sw=8 noet
+    au FileType yaml setlocal ts=2 sts=2 sw=2 et
+    au FileType css setlocal ts=2 sts=2 sw=2 et
+    au FileType ruby setlocal ts=2 sts=2 sw=2 et
+    au FileType jade setlocal ts=2 sts=2 sw=2 et
+    au FileType coffee setlocal ts=2 sts=2 sw=2 et
+    au FileType less setlocal ts=2 sts=2 sw=2 et
+    " autocmd FileType python setlocal tw=80
+
+    " Remove trailing whitespaces for py, js
+    " au BufWritePre *.py :call <SID>StripTrailingWhitespaces()
+    au BufEnter * let &titlestring = expand("%")
+
+    au BufNewFile,BufRead *.rss,*.atom setfiletype xml
+    au! BufRead,BufNewFile *.json setfiletype json
+endif
+
+function! <SID>StripTrailingWhitespaces()
+    " Save last search and cursor positions
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Remove trailing whitespace
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/ = _s
+    call cursor(l, c)
+endfunction
