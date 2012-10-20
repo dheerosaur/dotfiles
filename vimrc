@@ -178,3 +178,48 @@ function! <SID>StripTrailingWhitespaces()
     let @/ = _s
     call cursor(l, c)
 endfunction
+
+" Fugitive
+set previewheight=15
+nmap <C-g> :Gstatus<CR>
+nmap <leader>gh :Git hist<CR>
+nmap <leader>gd :Gdiff<CR>
+nmap <leader>gb :Gblame<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gw :Gwrite<CR>
+
+" ctrlp
+set wildignore+=*/tmp/*,*/.git/*,*/.hg/*,*/.svn/*
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files', 'find %s -type f']
+let g:ctrlp_working_path_mode = 2
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_mruf_exclude = '/tmp/.*\|\.git/.*'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  'crap$|site_media$|\/tmp$',
+  \ 'file': '\.pyc$\|\.min.js$|\.jpg$|\.png$|\.gif$',
+  \ }
+
+" powerline
+let g:Powerline_symbols='fancy'
+
+" Plugin mappings
+map <F3> :NERDTreeToggle<CR>
+
+nnoremap <leader>8 :SyntasticCheck<CR>
+nnoremap <leader>9 :SyntasticToggleMode<CR>
+
+" vim surround django mappings
+let g:surround_{char2nr("t")} = "{% trans \"\r\" %}"
+let g:surround_{char2nr("b")} = "{% blocktrans %}\r{% endblocktrans %}"
+let g:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+
+" Taglist
+let Tlist_Ctags_Cmd = "/usr/bin/ctags"
+let Tlist_WinWidth = 40
+let Tlist_Use_Right_Window = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+map <F4> :TlistToggle<CR>
+
+let Tlist_Exit_OnlyWindow = 1     " exit if taglist is last window open
+let Tlist_Show_One_File = 1       " Only show tags for current buffer
+let Tlist_Enable_Fold_Column = 0  " no fold column (only showing one file)
