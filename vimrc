@@ -24,21 +24,25 @@ Bundle 'godlygeek/tabular'
 Bundle 'SirVer/ultisnips'
 Bundle 'gregsexton/MatchTag'
 Bundle 'taglist.vim'
+Bundle 'benmills/vimux'
+Bundle 'airblade/vim-gitgutter.git'
 
 " filetype plugins
 Bundle 'tpope/vim-markdown'
 Bundle 'groenewege/vim-less'
+Bundle 'xolox/vim-pyref'
+Bundle 'pangloss/vim-javascript'
+Bundle 'jinfield/vim-nginx'
 
 filetype plugin indent on
 syntax on
 
 " colors
-let g:solarized_contrast = "high"
+let g:solarized_contrast="high"
 set t_Co=256
 set background=dark
 color solarized
 
-set title               " change the terminal's title
 set number              " show line numbers
 set ruler               " show line and column number
 set laststatus=2
@@ -124,9 +128,9 @@ map <C-k> :CtrlPMRUFiles<CR>
 
 " Resize windows vertically
 map <C-right> :vertical:resize +5<CR>
-map <C-left> s:vertical:resize -5<CR>
-map <C-up>    :resize +5<CR>
-map <C-down>  :resize -5<CR>
+map <C-left> :vertical:resize -5<CR>
+map <C-up> :resize +5<CR>
+map <C-down> :resize -5<CR>
 
 map <leader>y "+yy
 map <leader>p "+p
@@ -162,6 +166,9 @@ if has("autocmd")
     au FileType coffee setlocal ts=2 sts=2 sw=2 et
     au FileType less setlocal ts=2 sts=2 sw=2 et
     " autocmd FileType python setlocal tw=80
+    "
+    au FileType html setlocal foldmarker=start-->,end-->
+    au FileType htmldjango setlocal foldmarker=start-->,end-->
 
     " Remove trailing whitespaces for py, js
     " au BufWritePre *.py :call <SID>StripTrailingWhitespaces()
@@ -220,10 +227,34 @@ let g:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 " Taglist
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 40
-let Tlist_Use_Right_Window = 1
+let Tlist_Use_Right_Window = 0
 let Tlist_GainFocus_On_ToggleOpen = 1
 map <F4> :TlistToggle<CR>
 
 let Tlist_Exit_OnlyWindow = 1     " exit if taglist is last window open
 let Tlist_Show_One_File = 1       " Only show tags for current buffer
 let Tlist_Enable_Fold_Column = 0  " no fold column (only showing one file)
+
+" vim-javascript
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
+
+
+function! Reddit()
+    tabnew
+    silent read http://www.reddit.com/r/vim.json 
+    %!python -m json.tool
+    exe 'v/\v^\s+"(ti|ur)/d'
+    %norm df:x
+endfunction
+command! Reddit call Reddit()
+
+function! Google ()
+    exec "!google-chrome http://google.com/search?q=".expand("<cword>")
+endfunction
+map <leader>G :call Google()<CR>
+
+if filereadable(".lvimrc")
+    source .lvimrc
+endif
