@@ -14,14 +14,25 @@ HISTCONTROL=ignoredups:ignorespace
 export PYTHONSTARTUP=~/.pythonrc.py
 
 # virtualenvwrapper
+export PATH=/usr/local/bin:$PATH
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export WORKON_HOME=~/.virtualenvs
 export PROJECT_HOME=~/work
 export PIP_DOWNLOAD_CACHE=~/.pip/cache
-#
+
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+
+if [ -f /etc/bash_completion.d/git ]; then
+    . /etc/bash_completion.d/git
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
 TERM=xterm-256color
 force_color_prompt=yes
 
-PS1='\W $ '
+PS1='$(__git_ps1 "[%s] ")\W \$ '
