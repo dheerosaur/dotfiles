@@ -25,8 +25,13 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
+if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+fi
+
+
 if [ -f /etc/bash_completion.d/git ]; then
-    . /etc/bash_completion.d/git
+    source /etc/bash_completion.d/git
 fi
 
 # If not running interactively, don't do anything
