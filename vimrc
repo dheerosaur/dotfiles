@@ -16,7 +16,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'bling/vim-airline'
 Bundle 'bingaman/vim-sparkup'
 Bundle 'tsaleh/vim-matchit'
 Bundle 'altercation/vim-colors-solarized'
@@ -40,8 +40,8 @@ syntax on
 " colors
 let g:solarized_contrast="high"
 set t_Co=256
-set background=dark
 color solarized
+set background=dark
 
 set number              " show line numbers
 set ruler               " show line and column number
@@ -258,3 +258,7 @@ map <leader>G :call Google()<CR>
 if filereadable(".lvimrc")
     source .lvimrc
 endif
+
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_theme = 'simple'
