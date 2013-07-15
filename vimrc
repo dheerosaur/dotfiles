@@ -259,6 +259,10 @@ if filereadable(".lvimrc")
     source .lvimrc
 endif
 
+let g:gitgutter_enabled = 0
+
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_theme = 'simple'
+let g:airline_theme = 'ubaryd'
+
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippets"]
