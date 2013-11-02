@@ -30,7 +30,6 @@ Bundle 'airblade/vim-gitgutter.git'
 " filetype plugins
 Bundle 'tpope/vim-markdown'
 Bundle 'groenewege/vim-less'
-Bundle 'xolox/vim-pyref'
 Bundle 'pangloss/vim-javascript'
 Bundle 'jinfield/vim-nginx'
 
@@ -44,7 +43,9 @@ color solarized
 set background=dark
 
 set number              " show line numbers
+set relativenumber
 set ruler               " show line and column number
+set scrolloff=5
 set laststatus=2
 set noautochdir
 set viewdir=$HOME/.vimviews
@@ -160,15 +161,16 @@ if has("autocmd")
     "syntax demands
     au FileType make setlocal ts=8 sts=8 sw=8 noet
     au FileType yaml setlocal ts=2 sts=2 sw=2 et
-    au FileType css setlocal ts=2 sts=2 sw=2 et
     au FileType ruby setlocal ts=2 sts=2 sw=2 et
-    au FileType jade setlocal ts=2 sts=2 sw=2 et
+
+    au FileType javascript setlocal ts=2 sts=2 sw=2 et
     au FileType coffee setlocal ts=2 sts=2 sw=2 et
+    au FileType jade setlocal ts=2 sts=2 sw=2 et
+
     au FileType less setlocal ts=2 sts=2 sw=2 et
-    " autocmd FileType python setlocal tw=80
-    "
-    au FileType html setlocal foldmarker=start-->,end-->
-    au FileType htmldjango setlocal foldmarker=start-->,end-->
+    au FileType css setlocal ts=2 sts=2 sw=2 et
+
+    au FileType html setlocal ts=2 sts=2 sw=2 et
 
     " Remove trailing whitespaces for py, js
     " au BufWritePre *.py :call <SID>StripTrailingWhitespaces()
@@ -266,3 +268,5 @@ let g:airline_right_sep = ''
 let g:airline_theme = 'ubaryd'
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippets"]
+
+map ,t :call VimuxRunCommand('clear; djt')<CR>
