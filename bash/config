@@ -11,8 +11,6 @@ HISTIGNORE=":pwd:id:uptime:resize:ls:clear:history:exit:g"
 #Ignore duplicate entries
 HISTCONTROL=ignoredups:ignorespace
 
-export PYTHONSTARTUP=~/.pythonrc.py
-
 # virtualenvwrapper
 export PATH=/usr/local/bin:$PATH
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python

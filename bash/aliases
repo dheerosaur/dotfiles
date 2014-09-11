@@ -42,6 +42,7 @@ alias ev='vim -O'
 #django
 alias dj="python manage.py"
 alias djr="dj runserver"
+alias djrp="dj runserver_plus"
 alias djsh="dj shell"
 alias djshp="dj shell_plus"
 alias djdb="dj dbshell"
@@ -52,6 +53,7 @@ alias gh="git hist"
 alias gb="git branch"
 alias gd="git diff --color"
 alias gdw="git diff --color-words"
+alias gdc="gdw --cached"
 alias gco="git checkout"
 alias gc-="git checkout --"
 
@@ -82,4 +84,8 @@ function ackl {
 # find
 function lct {
     find . -iname "*$**"
+}
+
+function mcd() {
+    mkdir $1 && cd $1;
 }

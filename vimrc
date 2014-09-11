@@ -11,27 +11,31 @@ Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-unimpaired'
 Bundle 'int3/vim-extradite'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
+Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'bling/vim-airline'
 Bundle 'bingaman/vim-sparkup'
-Bundle 'tsaleh/vim-matchit'
+Bundle 'vim-scripts/matchit.zip'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'godlygeek/tabular'
-Bundle 'SirVer/ultisnips'
 Bundle 'gregsexton/MatchTag'
-Bundle 'taglist.vim'
+Bundle 'majutsushi/tagbar'
 Bundle 'benmills/vimux'
-Bundle 'airblade/vim-gitgutter.git'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 
 " filetype plugins
 Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-haml'
 Bundle 'groenewege/vim-less'
 Bundle 'pangloss/vim-javascript'
 Bundle 'jinfield/vim-nginx'
+Bundle 'othree/html5.vim'
 
 filetype plugin indent on
 syntax on
@@ -42,12 +46,13 @@ set t_Co=256
 color solarized
 set background=dark
 
+" set spell
 set number              " show line numbers
-set relativenumber
+set norelativenumber
 set ruler               " show line and column number
-set scrolloff=5
 set laststatus=2
 set noautochdir
+set scrolloff=5
 set viewdir=$HOME/.vimviews
 set viewoptions=folds,cursor
 
@@ -118,6 +123,7 @@ nmap <leader>v <C-w>v
 nmap <leader>s <C-w>s
 nmap <leader>x <C-w>c
 nmap <leader>d :bp<CR>:bd#<CR>
+nmap <leader>n :set relativenumber!<CR>
 
 " search for word under cursor
 nnoremap <leader><bs> :Ack! '\b<c-r><c-w>\b'<CR>
@@ -167,6 +173,7 @@ if has("autocmd")
     au FileType coffee setlocal ts=2 sts=2 sw=2 et
     au FileType jade setlocal ts=2 sts=2 sw=2 et
 
+    au FileType scss setlocal ts=2 sts=2 sw=2 et
     au FileType less setlocal ts=2 sts=2 sw=2 et
     au FileType css setlocal ts=2 sts=2 sw=2 et
 
@@ -220,8 +227,10 @@ map <F3> :NERDTreeToggle<CR>
 
 nnoremap <leader>8 :SyntasticCheck<CR>
 nnoremap <leader>9 :SyntasticToggleMode<CR>
+let g:syntastic_python_checkers = ['flake8']
 
 " vim surround django mappings
+let g:surround_{char2nr("s")} = "{% static \"\r\" %}"
 let g:surround_{char2nr("t")} = "{% trans \"\r\" %}"
 let g:surround_{char2nr("b")} = "{% blocktrans %}\r{% endblocktrans %}"
 let g:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
@@ -231,11 +240,15 @@ let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 40
 let Tlist_Use_Right_Window = 0
 let Tlist_GainFocus_On_ToggleOpen = 1
-map <F4> :TlistToggle<CR>
+nmap <F4> :TlistToggle<CR>
 
 let Tlist_Exit_OnlyWindow = 1     " exit if taglist is last window open
 let Tlist_Show_One_File = 1       " Only show tags for current buffer
 let Tlist_Enable_Fold_Column = 0  " no fold column (only showing one file)
+
+" Tagbar
+nmap <F4> :TagbarToggle<CR>
+let g:tagbar_left = 1
 
 " vim-javascript
 let g:html_indent_inctags = "html,body,head,tbody"
@@ -267,6 +280,8 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme = 'ubaryd'
 
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "snippets"]
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
 
 map ,t :call VimuxRunCommand('clear; djt')<CR>
