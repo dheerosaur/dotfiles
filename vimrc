@@ -31,11 +31,13 @@ Bundle 'honza/vim-snippets'
 
 " filetype plugins
 Bundle 'tpope/vim-markdown'
+Bundle 'nelstrom/vim-markdown-folding'
 Bundle 'tpope/vim-haml'
 Bundle 'groenewege/vim-less'
 Bundle 'pangloss/vim-javascript'
 Bundle 'jinfield/vim-nginx'
 Bundle 'othree/html5.vim'
+Bundle 'mxw/vim-jsx'
 
 filetype plugin indent on
 syntax on
