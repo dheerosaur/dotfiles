@@ -1,43 +1,46 @@
 set nocompatible        " Use Vim
 filetype off            " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Let Vundle manage Vundle
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 " github repos
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'int3/vim-extradite'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
-Bundle 'bling/vim-airline'
-Bundle 'bingaman/vim-sparkup'
-Bundle 'vim-scripts/matchit.zip'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'godlygeek/tabular'
-Bundle 'gregsexton/MatchTag'
-Bundle 'majutsushi/tagbar'
-Bundle 'benmills/vimux'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-repeat'
+Plugin 'int3/vim-extradite'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bingaman/vim-sparkup'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'godlygeek/tabular'
+Plugin 'gregsexton/MatchTag'
+Plugin 'majutsushi/tagbar'
+Plugin 'benmills/vimux'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'vimwiki/vimwiki'
 
 " filetype plugins
-Bundle 'tpope/vim-markdown'
-Bundle 'nelstrom/vim-markdown-folding'
-Bundle 'tpope/vim-haml'
-Bundle 'groenewege/vim-less'
-Bundle 'pangloss/vim-javascript'
-Bundle 'jinfield/vim-nginx'
-Bundle 'othree/html5.vim'
-Bundle 'mxw/vim-jsx'
+Plugin 'tpope/vim-markdown'
+Plugin 'groenewege/vim-less'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jinfield/vim-nginx'
+Plugin 'othree/html5.vim'
+Plugin 'mxw/vim-jsx'
+
+call vundle#end()
 
 filetype plugin indent on
 syntax on
@@ -64,6 +67,7 @@ set shell=/bin/bash
 set wrap
 set linebreak
 set nolist
+set backspace=indent,eol,start
 
 set expandtab           " enter spaces when tab is pressed
 set tabstop=4           " use 4 spaces to represent tab
@@ -72,6 +76,8 @@ set shiftwidth=4        " number of spaces to use for auto indent
 
 set autoindent          " automatic indentation
 set copyindent          " copy the previous indentation on auto-indenting
+
+set clipboard=unnamed
 
 set ignorecase
 set smartcase           " ignore case if search pattern is all lowercase
