@@ -88,8 +88,6 @@ set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " automatic indentation
 set copyindent          " copy the previous indentation on auto-indenting
 
-set clipboard=unnamed
-
 set ignorecase
 set smartcase           " ignore case if search pattern is all lowercase
 set nohlsearch            " highlights search results
@@ -122,9 +120,9 @@ command! Qall qall
 
 " Maps
 "---------------------------------------
+
 nmap <leader>q :q<CR>
-nmap <leader>ww :w<CR>
-nmap <leader>wq :wq <CR>
+nmap ,w :w<CR>
 
 " persist visual selection for indenting
 vnoremap < <gv
@@ -142,10 +140,11 @@ nmap <leader>v <C-w>v
 nmap <leader>s <C-w>s
 nmap <leader>x <C-w>c
 nmap <leader>d :bp<CR>:bd#<CR>
-nmap <leader>n :set relativenumber!<CR>
+nmap <leader>n :set number!<CR>
 
 " search for word under cursor
-nnoremap <leader><bs> :Ack! '\b<c-r><c-w>\b'<CR>
+let g:ackprg = 'ag --vimgrep'
+nnoremap <leader>a :Ack! '\b<c-r><c-w>\b'<CR>
 
 
 " Move between opened windows
@@ -166,9 +165,15 @@ map <leader>p "+p
 set listchars=tab:▸\ ,eol:¬
 nmap <leader>l :set list!<CR>
 
+nmap <leader>2 :setlocal ts=2 sts=2 sw=2 et<CR>
+nmap <leader>7 :set tw=79<CR>
+
 nmap <leader>t :tabe<CR>
 nmap <leader>rc :tabe $MYVIMRC<CR>
 nmap <leader>rs :so $MYVIMRC<CR>
+
+" Filetypes mapped to leader
+nmap <leader>fj :setf jinja.html<CR>
 
 nmap [t :tabp<CR>
 nmap ]t :tabn<CR>
@@ -189,17 +194,18 @@ if has("autocmd")
     au FileType ruby setlocal ts=2 sts=2 sw=2 et
 
     au FileType javascript setlocal ts=2 sts=2 sw=2 et
-    au FileType coffee setlocal ts=2 sts=2 sw=2 et
-    au FileType jade setlocal ts=2 sts=2 sw=2 et
 
     au FileType scss setlocal ts=2 sts=2 sw=2 et
     au FileType less setlocal ts=2 sts=2 sw=2 et
     au FileType css setlocal ts=2 sts=2 sw=2 et
 
     au FileType html setlocal ts=2 sts=2 sw=2 et
+    au FileType htmldjango setlocal ts=2 sts=2 sw=2 et
+
+    au FileType wiki setlocal tw=79
 
     " Remove trailing whitespaces for py, js
-    " au BufWritePre *.py :call <SID>StripTrailingWhitespaces()
+    au BufWritePre *.py :call <SID>StripTrailingWhitespaces()
     au BufEnter * let &titlestring = expand("%")
 
     au BufNewFile,BufRead *.rss,*.atom setfiletype xml
@@ -238,69 +244,92 @@ let g:ctrlp_custom_ignore = {
   \ 'file': '\.pyc$\|\.min.js$|\.jpg$|\.png$|\.gif$',
   \ }
 
-" powerline
-let g:Powerline_symbols='fancy'
-
-" Plugin mappings
-map <F3> :NERDTreeToggle<CR>
-
 nnoremap <leader>8 :SyntasticCheck<CR>
 nnoremap <leader>9 :SyntasticToggleMode<CR>
-let g:syntastic_python_checkers = ['flake8']
+
+" Nerd commenter
+let g:NERDDefaultAlign = 'left'
+let g:NERDSpaceDelims = 1
 
 " vim surround django mappings
 let g:surround_{char2nr("s")} = "{% static \"\r\" %}"
 let g:surround_{char2nr("t")} = "{% trans \"\r\" %}"
-let g:surround_{char2nr("b")} = "{% blocktrans %}\r{% endblocktrans %}"
+let g:surround_{char2nr("b")} = "{% block %}\r{% endblock %}"
 let g:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
-
-" Taglist
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
-let Tlist_WinWidth = 40
-let Tlist_Use_Right_Window = 0
-let Tlist_GainFocus_On_ToggleOpen = 1
-nmap <F4> :TlistToggle<CR>
-
-let Tlist_Exit_OnlyWindow = 1     " exit if taglist is last window open
-let Tlist_Show_One_File = 1       " Only show tags for current buffer
-let Tlist_Enable_Fold_Column = 0  " no fold column (only showing one file)
-
-" Tagbar
-nmap <F4> :TagbarToggle<CR>
-let g:tagbar_left = 1
 
 " vim-javascript
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
+let g:jsx_ext_required = 0
 
-
-function! Reddit()
-    tabnew
-    silent read http://www.reddit.com/r/vim.json 
-    %!python -m json.tool
-    exe 'v/\v^\s+"(ti|ur)/d'
-    %norm df:x
-endfunction
-command! Reddit call Reddit()
-
-function! Google ()
-    exec "!google-chrome http://google.com/search?q=".expand("<cword>")
-endfunction
-map <leader>G :call Google()<CR>
+" Emmet
+let user_emmet_expandabbr_key = '<C-e>'
 
 if filereadable(".lvimrc")
     source .lvimrc
 endif
 
-let g:gitgutter_enabled = 0
-
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme = 'ubaryd'
-
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 
-map ,t :call VimuxRunCommand('clear; djt')<CR>
+nmap <leader>= :s/=/ = /g<CR>
+nmap ,d "=strftime('= %A, %d %b %Y =')<C-M>p
+map ,c :call VimuxRunCommand('gcc ' . bufname("%") . ' && ./a.out')<CR>
+map ,t :call VimuxRunCommand('python3 ' . bufname("%"))<CR>
+map ,r :call VimuxRunCommand('go run ' . bufname("%"))<CR>
+map <leader>m :call VimuxRunLastCommand()<CR>
+
+hi MatchWord ctermfg=red guifg=blue
+
+"let g:netrw_altv = 1
+"let g:netrw_banner = 0
+"let g:netrw_browse_split = 4
+"let g:netrw_liststyle = 3
+"let g:netrw_winsize = -28
+
+" vimwiki settings
+nmap <Leader>1 <Plug>VimwikiMakeDiaryNote <bar> :Goyo<CR>
+nmap <Leader>2 <Plug>VimwikiMakeYesterdayDiaryNote <bar> :Goyo<CR>
+
+" Ale
+" ===
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   'python': ['autopep8', 'black'],
+\   'javascript': ['prettier', 'eslint'],
+\}
+let g:ale_linters = {
+\    'python': ['flake8', 'pylint'],
+\    'java': ['javac'],
+\    'javascript': ['eslint'],
+\}
+let g:ale_java_javac_executable = 'javac-algs4'
+let g:ale_javascript_prettier_options = '--single-quote'
+" ale gutter related
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+
+"alphsubs ---------------------- {{{
+    execute "digraphs ks " . 0x2096 
+    execute "digraphs as " . 0x2090
+    execute "digraphs es " . 0x2091
+    execute "digraphs hs " . 0x2095
+    execute "digraphs is " . 0x1D62
+    execute "digraphs ks " . 0x2096
+    execute "digraphs ls " . 0x2097
+    execute "digraphs ms " . 0x2098
+    execute "digraphs ns " . 0x2099
+    execute "digraphs os " . 0x2092
+    execute "digraphs ps " . 0x209A
+    execute "digraphs rs " . 0x1D63
+    execute "digraphs ss " . 0x209B
+    execute "digraphs ts " . 0x209C
+    execute "digraphs us " . 0x1D64
+    execute "digraphs vs " . 0x1D65
+    execute "digraphs xs " . 0x2093
+"}}}
