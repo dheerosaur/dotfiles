@@ -12,7 +12,7 @@ HISTIGNORE="z:e:pwd:id:uptime:resize:ls:clear:history:exit:g"
 HISTCONTROL=ignoreboth:erasedups
 
 # virtualenvwrapper
-export PATH=/usr/local/bin:$PATH
+export PATH=$(pyenv root)/shims:/usr/local/bin:$PATH
 
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
@@ -40,4 +40,4 @@ fi
 TERM=xterm-256color
 force_color_prompt=yes
 
-PS1='$(__git_ps1 "[%s] ")\W \$ '
+# PS1='$(__git_ps1 "[%s] ")\W \$ '
