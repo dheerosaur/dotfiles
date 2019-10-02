@@ -7,21 +7,20 @@ LS_OPTIONS='--color=yes'
 HISTSIZE=100000
 HISTFILESIZE=409600
 #Ignore common commands
-HISTIGNORE=":pwd:id:uptime:resize:ls:clear:history:exit:g"
+HISTIGNORE="z:e:pwd:id:uptime:resize:ls:clear:history:exit:g"
 #Ignore duplicate entries
-HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL=ignoreboth:erasedups
 
 # virtualenvwrapper
 export PATH=/usr/local/bin:$PATH
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export WORKON_HOME=~/.virtualenvs
 export PROJECT_HOME=~/work
 export PIP_DOWNLOAD_CACHE=~/.pip/cache
 
-if [ -f $HOME/.rvm/scripts/rvm ]; then
-    source $HOME/.rvm/scripts/rvm
-fi
+[ -s "$HOME/.pythonstartup" ] && export PYTHONSTARTUP=$HOME/.pythonstartup
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
