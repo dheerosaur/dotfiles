@@ -1,59 +1,70 @@
 set nocompatible        " Use Vim
 filetype off            " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" Let Vundle manage Vundle
-Plugin 'VundleVim/Vundle.vim'
+" ================
+" Plugins
+" ================
+
+" Git related
+Plug 'tpope/vim-fugitive'
+Plug 'int3/vim-extradite'
 
 " github repos
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-abolish'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-repeat'
-Plugin 'int3/vim-extradite'
-Plugin 'kien/ctrlp.vim'
-Plugin 'mileszs/ack.vim'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'bingaman/vim-sparkup'
-Plugin 'vim-scripts/matchit.zip'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'godlygeek/tabular'
-Plugin 'gregsexton/MatchTag'
-Plugin 'majutsushi/tagbar'
-Plugin 'benmills/vimux'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'vimwiki/vimwiki'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+
+" File system related
+Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+Plug 'editorconfig/editorconfig-vim'
+
+" Look and feel
+Plug 'itchyny/lightline.vim'
+Plug 'altercation/vim-colors-solarized'
+
+" HTML related plugins
+Plug 'mattn/emmet-vim'
+Plug 'andymass/vim-matchup'
+
+" Other useful plugins
+Plug 'w0rp/ale'
+Plug 'scrooloose/nerdcommenter'
+Plug 'godlygeek/tabular'
+Plug 'benmills/vimux'
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/goyo.vim'
+
+" Snippets
+Plug 'epilande/vim-react-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " filetype plugins
-Plugin 'tpope/vim-markdown'
-Plugin 'groenewege/vim-less'
-Plugin 'pangloss/vim-javascript'
-Plugin 'jinfield/vim-nginx'
-Plugin 'othree/html5.vim'
-Plugin 'mxw/vim-jsx'
+Plug 'tpope/vim-markdown'
+Plug 'groenewege/vim-less'
+Plug 'jinfield/vim-nginx'
+Plug 'othree/html5.vim'
+Plug 'lepture/vim-jinja'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'posva/vim-vue'
 
-call vundle#end()
+call plug#end()
 
 filetype plugin indent on
 syntax on
 
 " colors
-let g:solarized_contrast="high"
 set t_Co=256
+let g:solarized_contrast="high"
 color solarized
 set background=dark
 
 " set spell
 set number              " show line numbers
-set norelativenumber
 set ruler               " show line and column number
 set laststatus=2
 set noautochdir
