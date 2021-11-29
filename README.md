@@ -29,3 +29,8 @@ Some more info about setting up a new machine. Should be automated at some point
 [Macpass](https://macpassapp.org/) - FOSS password manager for Mac
 
 [Dropbox](https://www.dropbox.com/install) - Mainly for sharing configs across devices
+
+### Configure iTerm2
+
+- Profiles > Keys > Left option key acts as: `+Esc`
+- Profiles > Colors > Presets > Solarized Dark

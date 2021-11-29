@@ -1,5 +1,5 @@
 # Personal shortcuts
-alias e='vim'
+alias e='nvim'
 
 # Favorite directories
 alias o="open ."
@@ -22,7 +22,6 @@ alias ls="ls -G"
 alias lh="ls -lh"
 alias ll="ls -alF"
 alias la="ls -A"
-alias sl="ls"
 
 # cd related
 alias ..=" cd .."
@@ -36,14 +35,21 @@ alias gd="git diff --color"
 alias gdw="git diff --color-words"
 alias gco="git checkout"
 alias gc-="git checkout --"
+alias ghub="command gh"
+alias gup="git up"
 
 alias ga="git add"
 alias gcm="git commit -m"
+alias gca="git commit --amend"
 alias gcam="git commit -am"
 alias gpus="git push"
 alias gpul="git pull"
 alias gsa="git stash"
 alias gitmod="git ls-files -m"
+
+# Github
+alias prd="ghub pr list -A dheerosaur"
+alias pran="ghub pr list -A adybionka"
 
 # python aliases
 alias pyserver="python3 -m http.server"
@@ -71,3 +77,24 @@ function lct {
 function mcd() {
    mkdir $1 && cd $1;
 }
+
+function ggd() {
+    git diff `gd --name-status --relative | grep ^M | awk '{ print $2 }' | grep -i $1`
+}
+
+function gga() {
+    git add `gd --name-status --relative | grep ^M | awk '{ print $2 }' | grep -i $1`
+}
+
+function ggco() {
+    git checkout `git branch | grep $1 | head -n 1`;
+}
+
+function init_python() {
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+    export WORKON_HOME=~/.virtualenvs
+    pyenv virtualenvwrapper_lazy
+}
+

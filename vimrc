@@ -17,7 +17,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 
 " File system related
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'editorconfig/editorconfig-vim'
 
@@ -30,17 +30,21 @@ Plug 'mattn/emmet-vim'
 Plug 'andymass/vim-matchup'
 
 " Other useful plugins
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
 Plug 'scrooloose/nerdcommenter'
 Plug 'godlygeek/tabular'
 Plug 'benmills/vimux'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/goyo.vim'
+Plug 'tpope/vim-abolish'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Snippets
 Plug 'epilande/vim-react-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'github/copilot.vim'
 
 " filetype plugins
 Plug 'tpope/vim-markdown'
@@ -49,8 +53,9 @@ Plug 'jinfield/vim-nginx'
 Plug 'othree/html5.vim'
 Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'posva/vim-vue'
+Plug 'leafgarland/typescript-vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'vim-test/vim-test'
 
 call plug#end()
 
@@ -91,6 +96,7 @@ set copyindent          " copy the previous indentation on auto-indenting
 set ignorecase
 set smartcase           " ignore case if search pattern is all lowercase
 set nohlsearch            " highlights search results
+set noincsearch         
 
 set wildmenu                            " make tab completion act like bash
 set wildignore=*.swp,*.pyc,*.class      " while tab completing, ignore these files
@@ -210,6 +216,8 @@ if has("autocmd")
 
     au BufNewFile,BufRead *.rss,*.atom setfiletype xml
     au! BufRead,BufNewFile *.json setfiletype json
+
+    au BufNewFile,BufRead *.tsx set filetype=typescriptreact.typescript
 endif
 
 function! <SID>StripTrailingWhitespaces()
@@ -226,17 +234,21 @@ endfunction
 
 " Fugitive
 set previewheight=15
-nmap <C-g> :Gstatus<CR>
-nmap <leader>gh :Git hist<CR>
+nmap <C-g> :Git<CR>
 nmap <leader>gd :Gdiff<CR>
-nmap <leader>gb :Gblame<CR>
-nmap <leader>gc :Gcommit<CR>
+nmap <leader>gb :Git blame<CR>
+nmap <leader>gc :Git commit<CR>
 nmap <leader>gw :Gwrite<CR>
 
 " ctrlp
 set wildignore+=*/tmp/*,*/.git/*,*/.hg/*,*/.svn/*
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files', 'find %s -type f']
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_user_command = {
+    \ 'types': {
+      \ 1: ['.git', 'cd %s && git ls-files'],
+      \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
+let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '/tmp/.*\|\.git/.*'
 let g:ctrlp_custom_ignore = {
@@ -274,12 +286,12 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.vim/UltiSnips']
 
 nmap <leader>= :s/=/ = /g<CR>
 nmap ,d "=strftime('= %A, %d %b %Y =')<C-M>p
 map ,c :call VimuxRunCommand('gcc ' . bufname("%") . ' && ./a.out')<CR>
-map ,t :call VimuxRunCommand('python3 ' . bufname("%"))<CR>
+map ,t :call VimuxRunCommand('yarn test ' . bufname("%"))<CR>
 map ,r :call VimuxRunCommand('go run ' . bufname("%"))<CR>
 map <leader>m :call VimuxRunLastCommand()<CR>
 
@@ -297,22 +309,31 @@ nmap <Leader>2 <Plug>VimwikiMakeYesterdayDiaryNote <bar> :Goyo<CR>
 
 " Ale
 " ===
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1 
 let g:ale_fixers = {
-\   'python': ['autopep8', 'black'],
-\   'javascript': ['prettier', 'eslint'],
+\   'python': ['black'],
+\   'css': ['prettier'],
+\   'javascript': ['eslint', 'prettier'],
+\   'typescript': ['eslint', 'prettier']
 \}
 let g:ale_linters = {
 \    'python': ['flake8', 'pylint'],
 \    'java': ['javac'],
-\    'javascript': ['eslint'],
+\    'css': ['prettier'],
+\    'scss': ['prettier'],
+\    'javascript': ['eslint', 'prettier'],
+\    'typescript': ['eslint', 'prettier']
 \}
 let g:ale_java_javac_executable = 'javac-algs4'
-let g:ale_javascript_prettier_options = '--single-quote'
+let g:ale_javascript_prettier_executable = 'yarn prettier'
 " ale gutter related
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
+nmap ]a :ALENextWrap<CR>
+nmap [a :ALEPreviousWrap<CR>
+
+let g:gutentags_ctags_exclude = ['node_modules', 'build', '.mypy_cache']
 
 "alphsubs ---------------------- {{{
     execute "digraphs ks " . 0x2096 
@@ -333,3 +354,32 @@ let g:ale_sign_warning = '--'
     execute "digraphs vs " . 0x1D65
     execute "digraphs xs " . 0x2093
 "}}}
+"
+let g:lightline = {
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ }
+      \ }
+
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
+
+let g:python_host_prog = '/Users/dheerajsayala/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/dheerajsayala/.pyenv/versions/neovim3/bin/python'
+
+nmap <leader>gi :vs %:p:h/index.tsx<CR>
+nmap <leader>gt :vs %:p:h/index.test.tsx<CR>
+nmap <leader>gs :vs %:p:h/style.js<CR>
+nmap <leader>' s’<esc>
+
+set isfname+=@-@
+
+" let g:copilot_filetypes = {
+" \   'javascript': v:false,
+" \ }
