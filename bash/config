@@ -1,11 +1,12 @@
-export EDITOR="nvim"
+export EDITOR='nvim'
+export VISUAL='nvim'
 
 # define tool-specific settings
 LS_OPTIONS='--color=yes'
 
 #History settings
 HISTSIZE=1000
-shopt -s histappend
+# shopt -s histappend
 HISTFILESIZE=409600
 
 #Ignore common commands
@@ -35,7 +36,3 @@ eval "$(pyenv init - )"
 pyenv virtualenvwrapper_lazy
 
 [ -s "$HOME/.pythonstartup" ] && export PYTHONSTARTUP=$HOME/.pythonstartup
-
-# if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-#     source /usr/local/bin/virtualenvwrapper.sh
-# fi

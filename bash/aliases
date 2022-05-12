@@ -70,9 +70,7 @@ function mkpy {
    mkdir $1 && touch $1/__init__.py
 }
 
-function lct {
-   find . -iname "*$**" ! -path "*.git*"
-}
+alias lct=fd
 
 function mcd() {
    mkdir $1 && cd $1;

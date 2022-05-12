@@ -1,4 +1,4 @@
-set nocompatible        " Use Vim
+set nocompatible        " use vim
 filetype off            " required!
 
 call plug#begin('~/.vim/plugged')
@@ -10,6 +10,8 @@ call plug#begin('~/.vim/plugged')
 " Git related
 Plug 'tpope/vim-fugitive'
 Plug 'int3/vim-extradite'
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
 
 " github repos
 Plug 'tpope/vim-surround'
@@ -64,9 +66,9 @@ syntax on
 
 " colors
 set t_Co=256
-let g:solarized_contrast="high"
-color solarized
 set background=dark
+colorscheme solarized
+let g:solarized_visibility = "high"
 
 " set spell
 set number              " show line numbers
@@ -177,6 +179,7 @@ nmap <leader>7 :set tw=79<CR>
 nmap <leader>t :tabe<CR>
 nmap <leader>rc :tabe $MYVIMRC<CR>
 nmap <leader>rs :so $MYVIMRC<CR>
+nmap <leader>rt :tabe ~/.tmux.conf<CR>
 
 " Filetypes mapped to leader
 nmap <leader>fj :setf jinja.html<CR>
@@ -215,7 +218,7 @@ if has("autocmd")
     au BufEnter * let &titlestring = expand("%")
 
     au BufNewFile,BufRead *.rss,*.atom setfiletype xml
-    au! BufRead,BufNewFile *.json setfiletype json
+    au BufRead,BufNewFile *.json setlocal filetype=jsonc
 
     au BufNewFile,BufRead *.tsx set filetype=typescriptreact.typescript
 endif
@@ -246,7 +249,7 @@ let g:ctrlp_user_command = {
     \ 'types': {
       \ 1: ['.git', 'cd %s && git ls-files'],
       \ },
-    \ 'fallback': 'find %s -type f'
+    \ 'fallback': 'fd'
     \ }
 let g:ctrlp_working_path_mode = 'rw'
 let g:ctrlp_clear_cache_on_exit = 0
@@ -303,18 +306,15 @@ hi MatchWord ctermfg=red guifg=blue
 "let g:netrw_liststyle = 3
 "let g:netrw_winsize = -28
 
-" vimwiki settings
-nmap <Leader>1 <Plug>VimwikiMakeDiaryNote <bar> :Goyo<CR>
-nmap <Leader>2 <Plug>VimwikiMakeYesterdayDiaryNote <bar> :Goyo<CR>
-
 " Ale
 " ===
-let g:ale_fix_on_save = 1 
+let g:ale_fix_on_save = 1
 let g:ale_fixers = {
-\   'python': ['black'],
+\   'python': ['black', 'isort'],
 \   'css': ['prettier'],
 \   'javascript': ['eslint', 'prettier'],
-\   'typescript': ['eslint', 'prettier']
+\   'typescript': ['eslint', 'prettier'],
+\   'json': ['prettier']
 \}
 let g:ale_linters = {
 \    'python': ['flake8', 'pylint'],
@@ -333,6 +333,7 @@ let g:ale_sign_warning = '--'
 nmap ]a :ALENextWrap<CR>
 nmap [a :ALEPreviousWrap<CR>
 
+let g:gutentags_project_root = ['.gutentags']
 let g:gutentags_ctags_exclude = ['node_modules', 'build', '.mypy_cache']
 
 "alphsubs ---------------------- {{{
@@ -375,11 +376,19 @@ let g:python3_host_prog = '/Users/dheerajsayala/.pyenv/versions/neovim3/bin/pyth
 
 nmap <leader>gi :vs %:p:h/index.tsx<CR>
 nmap <leader>gt :vs %:p:h/index.test.tsx<CR>
-nmap <leader>gs :vs %:p:h/style.js<CR>
+nmap <leader>gs :vs %:p:h/style.ts<CR>
 nmap <leader>' s’<esc>
+map <leader>gh :OpenGithubFile<CR>
+map <leader>pr :OpenGithubIssue<CR>
 
 set isfname+=@-@
 
 " let g:copilot_filetypes = {
 " \   'javascript': v:false,
 " \ }
+
+" autocmd FileType typescript hi Pmenu ctermfg=Black ctermbg=White
+" autocmd FileType typescript hi PmenuSel ctermfg=Black ctermbg=White
+" autocmd FileType typescript hi FgCocErrorFloatBgCocFloating ctermfg=Black ctermbg=White guifg=White guibg=Black
+
+let g:coc_global_extensions = ['coc-tsserver']
