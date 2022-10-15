@@ -1,5 +1,6 @@
 # Personal shortcuts
 alias e='nvim'
+alias vim='nvim'
 
 # Favorite directories
 alias o="open ."

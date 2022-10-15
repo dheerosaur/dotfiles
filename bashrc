@@ -1,3 +1,7 @@
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
+
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm"
 
@@ -13,3 +17,5 @@ source ~/.profile
 if [ -f ~/dotfiles/bash/localrc ]; then
     source ~/dotfiles/bash/localrc
 fi
+
+[ -s "~/.cargo/env" ] && source "~/.cargo/env"

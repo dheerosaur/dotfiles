@@ -34,10 +34,10 @@ Plug 'andymass/vim-matchup'
 " Other useful plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
-Plug 'scrooloose/nerdcommenter'
+" Plug 'scrooloose/nerdcommenter'
+Plug 'numToStr/Comment.nvim'
 Plug 'godlygeek/tabular'
 Plug 'benmills/vimux'
-Plug 'vimwiki/vimwiki'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-abolish'
 Plug 'ludovicchabant/vim-gutentags'
@@ -50,14 +50,17 @@ Plug 'github/copilot.vim'
 
 " filetype plugins
 Plug 'tpope/vim-markdown'
-Plug 'groenewege/vim-less'
-Plug 'jinfield/vim-nginx'
 Plug 'othree/html5.vim'
-Plug 'lepture/vim-jinja'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'vim-test/vim-test'
+
+" New experiments
+" Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 
 call plug#end()
 
@@ -69,6 +72,8 @@ set t_Co=256
 set background=dark
 colorscheme solarized
 let g:solarized_visibility = "high"
+let g:solarized_contrast="high"
+color solarized
 
 " set spell
 set number              " show line numbers
@@ -220,7 +225,7 @@ if has("autocmd")
     au BufNewFile,BufRead *.rss,*.atom setfiletype xml
     au BufRead,BufNewFile *.json setlocal filetype=jsonc
 
-    au BufNewFile,BufRead *.tsx set filetype=typescriptreact.typescript
+    au BufNewFile,BufRead *.tsx set filetype=typescriptreact.typescript ts=2 sts=2 sw=2 et
 endif
 
 function! <SID>StripTrailingWhitespaces()
@@ -262,9 +267,14 @@ let g:ctrlp_custom_ignore = {
 nnoremap <leader>8 :SyntasticCheck<CR>
 nnoremap <leader>9 :SyntasticToggleMode<CR>
 
-" Nerd commenter
-let g:NERDDefaultAlign = 'left'
-let g:NERDSpaceDelims = 1
+lua require('Comment').setup()
+
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+
+" Telescope setup
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
 
 " vim surround django mappings
 let g:surround_{char2nr("s")} = "{% static \"\r\" %}"
@@ -289,13 +299,9 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>" 
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips', 'UltiSnips']
 
 nmap <leader>= :s/=/ = /g<CR>
-nmap ,d "=strftime('= %A, %d %b %Y =')<C-M>p
-map ,c :call VimuxRunCommand('gcc ' . bufname("%") . ' && ./a.out')<CR>
-map ,t :call VimuxRunCommand('yarn test ' . bufname("%"))<CR>
-map ,r :call VimuxRunCommand('go run ' . bufname("%"))<CR>
 map <leader>m :call VimuxRunLastCommand()<CR>
 
 hi MatchWord ctermfg=red guifg=blue
@@ -355,7 +361,7 @@ let g:gutentags_ctags_exclude = ['node_modules', 'build', '.mypy_cache']
     execute "digraphs vs " . 0x1D65
     execute "digraphs xs " . 0x2093
 "}}}
-"
+
 let g:lightline = {
       \ 'component_function': {
       \   'filename': 'LightlineFilename',
@@ -382,7 +388,6 @@ map <leader>gh :OpenGithubFile<CR>
 map <leader>pr :OpenGithubIssue<CR>
 
 set isfname+=@-@
-
 " let g:copilot_filetypes = {
 " \   'javascript': v:false,
 " \ }
