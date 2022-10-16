@@ -1,13 +1,4 @@
-#### FIG ENV VARIABLES ####
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+shopt -s histappend
 
 source ~/dotfiles/bash/aliases
 source ~/dotfiles/bash/config
@@ -17,5 +8,3 @@ source ~/.profile
 if [ -f ~/dotfiles/bash/localrc ]; then
     source ~/dotfiles/bash/localrc
 fi
-
-[ -s "~/.cargo/env" ] && source "~/.cargo/env"

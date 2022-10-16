@@ -5,7 +5,6 @@ export VISUAL='nvim'
 LS_OPTIONS='--color=yes'
 
 # History settings
-shopt -s histappend
 HISTSIZE=100000
 HISTFILESIZE=409600
 
@@ -30,7 +29,20 @@ export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=~/work
 
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
+
 eval "$(pyenv init - )"
 pyenv virtualenvwrapper_lazy
 
 [ -s "$HOME/.pythonstartup" ] && export PYTHONSTARTUP=$HOME/.pythonstartup
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -s "~/.cargo/env" ] && source "~/.cargo/env"

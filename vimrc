@@ -40,7 +40,6 @@ Plug 'godlygeek/tabular'
 Plug 'benmills/vimux'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-abolish'
-Plug 'ludovicchabant/vim-gutentags'
 
 " Snippets
 Plug 'epilande/vim-react-snippets'
@@ -269,7 +268,6 @@ nnoremap <leader>9 :SyntasticToggleMode<CR>
 
 lua require('Comment').setup()
 
-
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 
 " Telescope setup
@@ -338,9 +336,6 @@ let g:ale_sign_warning = '--'
 
 nmap ]a :ALENextWrap<CR>
 nmap [a :ALEPreviousWrap<CR>
-
-let g:gutentags_project_root = ['.gutentags']
-let g:gutentags_ctags_exclude = ['node_modules', 'build', '.mypy_cache']
 
 "alphsubs ---------------------- {{{
     execute "digraphs ks " . 0x2096 
