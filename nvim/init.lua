@@ -426,3 +426,72 @@ cmp.setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- dheeraj/options
+-- ===============
+vim.cmd('set directory=~/.vim-swap/')
+
+local options = {
+  autochdir = false,
+  scrolloff = 5,
+  directory = '$HOME/.vim-swap',
+  viewdir = "$HOME/.vimviews",
+  viewoptions = "folds,cursor",
+  shell = "/bin/bash",
+  wrap = true,
+  list = false,
+  backspace = 'indent,eol,start',
+  expandtab = true,
+  tabstop = 2,
+  softtabstop = 2,
+  shiftwidth = 2,
+  linebreak = true,
+  autoindent = true,
+  copyindent = true,
+  ignorecase = true,
+  smartcase = true,
+  wildmenu = true,
+  wildignore = "*.swp,*.pyc,*.class",
+}
+-- 
+for k, v in pairs(options) do
+  vim.opt[k] = v
+end
+
+-- dheeraj/keymaps
+-- ===============
+local kopts = { noremap = true, silent = true }
+
+-- Shorten function name
+local keymap = vim.api.nvim_set_keymap
+--Remap space as leader key
+keymap("", "\\", "<Nop>", kopts)
+vim.g.mapleader = "\\"
+vim.g.maplocalleader = "\\"
+
+-- Quick quitting
+keymap("n", "<leader>q", ":q<CR>", kopts)
+
+-- Resize windows vertically
+keymap('n', '<S-Right>', ':vertical:resize +5<CR>', kopts)
+keymap('n', '<S-Left>', ':vertical:resize -5<CR>', kopts)
+keymap('n', '<S-Up>', ':resize +5<CR>', kopts)
+keymap('n', '<S-Down>', ':resize -5<CR>', kopts)
+
+-- Splitting and closing windows
+keymap('n', '<leader>v', '<C-w>v', kopts)
+keymap('n', '<leader>s', '<C-w>s', kopts)
+keymap('n', '<leader>x', '<C-w>c', kopts)
+keymap('n', '<leader>d', ':bp<CR>:bd#<CR>', kopts)
+
+-- Move text up and down
+keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", kopts)
+keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", kopts)
+
+-- Make Y behave like other capitals
+keymap("n", "Y", "y$", kopts)
+
+-- Visual --
+-- Stay in indent mode
+keymap("v", "<", "<gv", kopts)
+keymap("v", ">", ">gv", kopts)
