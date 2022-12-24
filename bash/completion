@@ -1,17 +1,25 @@
-# PS1='$(__git_ps1 "[%s] ")\W \$ '
-PS1='$(__git_ps1 "[%s] ")\W $ '
-
 if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
+	source /etc/bash_completion
 fi
 
 if [ -f /etc/bash_completion.d/git ]; then
-    source /etc/bash_completion.d/git
+	source /etc/bash_completion.d/git
 fi
 
-[ -s "$HOME/bin/complete/tmuxinator.bash" ] && source ~/bin/complete/tmuxinator.bash
+if [ -f "$HOME/bin/complete/tmuxinator.bash" ]; then
+	source ~/bin/complete/tmuxinator.bash
+fi
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    source $(brew --prefix)/etc/bash_completion
+	source $(brew --prefix)/etc/bash_completion
 fi
 
+if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then
+	source /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
+fi
+
+if [ -f ~/.git-completion.bash ]; then
+	source ~/.git-completion.bash
+fi
+
+PS1='$(__git_ps1 "[%s] ")\W $ '
