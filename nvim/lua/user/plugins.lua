@@ -1,4 +1,5 @@
 return function(use)
+  use 'github/copilot.vim'
   use 'int3/vim-extradite'
   use 'tpope/vim-surround'
   use 'tpope/vim-unimpaired'

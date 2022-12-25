@@ -60,8 +60,8 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
-  -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
-  local has_plugins, plugins = pcall(require, 'custom.plugins')
+  -- Add custom plugins to packer from ~/.config/nvim/lua/user/plugins.lua
+  local has_plugins, plugins = pcall(require, 'user.plugins')
   if has_plugins then
     plugins(use)
   end
@@ -423,6 +423,10 @@ local options = {
 -- 
 for k, v in pairs(options) do
   vim.opt[k] = v
+end
+
+if vim.fn.filereadable('.lvimrc') == 1 then
+  vim.cmd('source .lvimrc')
 end
 
 -- dheeraj/keymaps
