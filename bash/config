@@ -6,7 +6,6 @@ LS_OPTIONS='--color=yes'
 
 # History settings
 HISTSIZE=100000
-shopt -s histappend
 
 #Ignore common commands
 HISTIGNORE="z:e:pwd:id:uptime:resize:ls:clear:history:exit:g"

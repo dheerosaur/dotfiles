@@ -48,7 +48,6 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -59,6 +58,10 @@ require('packer').startup(function(use)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+
+  -- colorschemes
+  use 'ishan9299/nvim-solarized-lua'
+  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/user/plugins.lua
   local has_plugins, plugins = pcall(require, 'user.plugins')
@@ -396,13 +399,12 @@ cmp.setup {
 
 -- dheeraj/options
 -- ===============
-vim.cmd('set directory=~/.vim-swap/')
+vim.cmd('set directory=$HOME/.vim-swap/')
 
 local options = {
   autochdir = false,
   scrolloff = 5,
-  directory = '$HOME/.vim-swap',
-  viewdir = "$HOME/.vimviews",
+  viewdir = "~/.vimviews",
   viewoptions = "folds,cursor",
   shell = "/bin/bash",
   wrap = true,
@@ -474,7 +476,16 @@ keymap("n", '<leader>gb', ':Git blame<CR>', kopts)
 keymap("n", '<leader>gc', ':Git commit<CR>', kopts)
 keymap("n", '<leader>gw', ':Gwrite<CR>', kopts)
 
+keymap('n', '<leader>l', ':set list!<CR>', kopts)
+keymap('n', '<leader>2', ':setlocal ts=2 sts=2 sw=2 et<CR>', kopts)
+keymap('n', '<leader>7', ':set tw=79<CR>', kopts)
+keymap('n', '<leader>t', ':tabe<CR>', kopts)
+keymap('n', '<leader>rc', ':tabe $MYVIMRC<CR>', kopts)
+keymap('n', '<leader>rs', ':so $MYVIMRC<CR>', kopts)
+keymap('n', '<leader>rt', ':tabe ~/.tmux.conf<CR>', kopts)
+
 -- dheeraj/telescope
 -- =================
 -- See `:help telescope` and `:help telescope.setup()`
 require('user.telescope')
+-- require('user.solarized')
