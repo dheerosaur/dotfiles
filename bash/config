@@ -15,7 +15,7 @@ HISTCONTROL=ignoreboth:erasedups
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-TERM=screen-256color
+export TERM=screen-256color
 force_color_prompt=yes
 
 ########### Python ##################

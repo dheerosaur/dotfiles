@@ -392,11 +392,11 @@ cmp.setup {
 -- dheeraj/options
 -- ===============
 vim.cmd('set directory=$HOME/.vim-swap/')
+vim.cmd('set viewdir=~/.vimviews')
 
 local options = {
   autochdir = false,
   scrolloff = 5,
-  viewdir = "~/.vimviews",
   viewoptions = "folds,cursor",
   shell = "/bin/bash",
   wrap = true,
@@ -481,3 +481,12 @@ keymap('n', '<leader>rt', ':tabe ~/.tmux.conf<CR>', kopts)
 -- See `:help telescope` and `:help telescope.setup()`
 require('user.telescope')
 -- require('user.solarized')
+
+vim.cmd('let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"')
+vim.cmd('let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"')
+
+
+vim.cmd('au BufWinLeave ?* silent! mkview')
+vim.cmd('au BufWinEnter ?* silent! loadview')
+vim.cmd('au TabLeave ?* silent! mkview')
+vim.cmd('au TabEnter ?* silent! loadview')
