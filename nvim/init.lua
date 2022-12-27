@@ -468,6 +468,11 @@ keymap("n", '<leader>gb', ':Git blame<CR>', kopts)
 keymap("n", '<leader>gc', ':Git commit<CR>', kopts)
 keymap("n", '<leader>gw', ':Gwrite<CR>', kopts)
 
+vim.cmd('nmap <leader>bb :e $HOME/.bashrc<CR>')
+vim.cmd('nmap <leader>ba :e $HOME/dotfiles/bash/aliases<CR>')
+vim.cmd('nmap <leader>bc :e $HOME/dotfiles/bash/config<CR>')
+vim.cmd('nmap <leader>bl :e $HOME/dotfiles/bash/localrc<CR>')
+
 keymap('n', '<leader>l', ':set list!<CR>', kopts)
 keymap('n', '<leader>2', ':setlocal ts=2 sts=2 sw=2 et<CR>', kopts)
 keymap('n', '<leader>7', ':set tw=79<CR>', kopts)
