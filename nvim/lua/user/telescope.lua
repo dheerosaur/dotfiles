@@ -64,17 +64,19 @@ telescope.setup {
 
 -- Telescope
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files'})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find using grep'})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffer'})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help'})
+vim.keymap.set('n', '<leader>fd', builtin.live_grep, { desc = 'Find diagnostics' })
+vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find keymaps' })
 
 -- Ctrl-P like commands
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 vim.keymap.set('n', '<C-k>', builtin.oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<C-j>', builtin.buffers, {})
 
-vim.keymap.set('n', '<leader>fd', telescope.extensions.dir.find_files, {})
+vim.keymap.set('n', '<leader>fo', telescope.extensions.dir.find_files, {})
 vim.keymap.set('n', '<leader>rg', telescope.extensions.dir.live_grep, {})
 
 -- See `:help telescope.builtin`
@@ -86,9 +88,7 @@ vim.keymap.set('n', '<leader>/', function()
     previewer = false,
   })
 end, { desc = '[/] Fuzzily search in current buffer]' })
--- 
+
 -- vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
 -- vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
 -- vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
--- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
--- vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })

@@ -1,6 +1,10 @@
 # Personal shortcuts
 alias e='nvim'
+alias vi='nvim'
 alias vim='nvim'
+alias v='fd --type f --hidden --exclude .git | __fzf_select__ | xargs nvim'
+
+alias rm="trash"
 
 # Favorite directories
 alias o="open ."
@@ -35,8 +39,6 @@ alias gb="git branch"
 alias gd="git diff --color"
 alias gdw="git diff --color-words"
 alias gco="git checkout"
-alias gcof="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git checkout"
-alias gdf="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git branch -D"
 alias gc-="git checkout --"
 alias gup="git up"
 alias github="command gh"
@@ -51,9 +53,16 @@ alias gpul="git pull"
 alias gsa="git stash"
 alias gitmod="git ls-files -m"
 
+# git and fzf
+alias gcof="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git checkout"
+alias gdf="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git branch -D"
+
 # Github
-alias prd="ghub pr list -A dheerosaur"
-alias pran="ghub pr list -A adybionka"
+alias ghd="gh pr list -A dheerosaur"
+alias ghco="GH_FORCE_TTY=100% gh pr list | fzf --height 90% --ansi --preview 'GH_FORCE_TTY=100% gh pr view {1}' --preview-window down | awk '{ print $1 }' | xargs gh pr checkout"
+
+# fzf makes everything awesome
+alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'
 
 # python aliases
 alias pyserver="python3 -m http.server"
@@ -99,4 +108,3 @@ function init_python() {
     export WORKON_HOME=~/.virtualenvs
     pyenv virtualenvwrapper_lazy
 }
-

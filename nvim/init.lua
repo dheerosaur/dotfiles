@@ -481,6 +481,18 @@ keymap('n', '<leader>rc', ':tabe $MYVIMRC<CR>', kopts)
 keymap('n', '<leader>rs', ':so $MYVIMRC<CR>', kopts)
 keymap('n', '<leader>rt', ':tabe ~/.tmux.conf<CR>', kopts)
 
+-- Copy to clipboard
+keymap('v', '<leader>y', '"+y', kopts)
+keymap('n', '<leader>Y', '"+yg_', kopts)
+keymap('n', '<leader>y', '"+y', kopts)
+keymap('n', '<leader>yy','"+yy', kopts)
+
+-- Paste from clipboard
+keymap('n', '<leader>p', '"+p', kopts)
+keymap('n', '<leader>P', '"+P', kopts)
+keymap('v', '<leader>p', '"+p', kopts)
+keymap('v', '<leader>P', '"+Package', kopts)
+
 -- dheeraj/telescope
 -- =================
 -- See `:help telescope` and `:help telescope.setup()`
