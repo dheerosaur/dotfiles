@@ -59,7 +59,7 @@ alias gdf="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs
 
 # Github
 alias ghd="gh pr list -A dheerosaur"
-alias ghco="GH_FORCE_TTY=100% gh pr list | fzf --height 90% --ansi --preview 'GH_FORCE_TTY=100% gh pr view {1}' --preview-window down | awk '{ print $1 }' | xargs gh pr checkout"
+alias ghco='GH_FORCE_TTY=100% gh pr list | fzf --height 90% --ansi --preview "GH_FORCE_TTY=100% gh pr view {1}" --preview-window down | cut -d" " -f1 | xargs gh pr checkout'
 
 # fzf makes everything awesome
 alias tldrf='tldr --list | fzf --preview "tldr {1} --color=always" --preview-window=right,70% | xargs tldr'

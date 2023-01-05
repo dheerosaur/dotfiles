@@ -15,9 +15,6 @@ require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = {
       -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-
       -- Useful status updates for LSP
       'j-hui/fidget.nvim',
 
@@ -25,6 +22,19 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
     },
   }
+
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+
+  use({
+    { 'williamboman/mason.nvim', config = require("user.mason") },
+    'williamboman/mason-lspconfig.nvim',
+    "jayp0521/mason-null-ls.nvim",
+  })
+
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -72,6 +82,18 @@ require('packer').startup(function(use)
     require('packer').sync()
   end
 end)
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.eslint,
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.completion.spell,
+  },
+})
 
 -- When we are bootstrapping a configuration, it doesn't
 -- make sense to execute the rest of the init.lua.
@@ -161,6 +183,7 @@ require('lualine').setup {
     theme = 'onedark',
     component_separators = '|',
     section_separators = '',
+    path = 1,
   },
 }
 
@@ -343,9 +366,14 @@ mason_lspconfig.setup_handlers {
 -- Turn on lsp status information
 require('fidget').setup()
 
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ""
+
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup {
   snippet = {
@@ -362,7 +390,10 @@ cmp.setup {
       select = true,
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      local copilot_keys = vim.fn['copilot#Accept']()
+      if copilot_keys ~= '' and type(copilot_keys) == 'string' then
+        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+      elseif cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
@@ -414,7 +445,7 @@ local options = {
   wildmenu = true,
   wildignore = "*.swp,*.pyc,*.class",
 }
--- 
+--
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
@@ -425,73 +456,7 @@ end
 
 -- dheeraj/keymaps
 -- ===============
-local kopts = { noremap = true, silent = true }
-
--- Shorten function name
-local keymap = vim.api.nvim_set_keymap
---Remap space as leader key
-keymap("", "\\", "<Nop>", kopts)
-vim.g.mapleader = "\\"
-vim.g.maplocalleader = "\\"
-
--- Quick quitting
-keymap("n", "<leader>q", ":q<CR>", kopts)
-
--- Resize windows vertically
-keymap('n', '<S-Right>', ':vertical:resize +5<CR>', kopts)
-keymap('n', '<S-Left>', ':vertical:resize -5<CR>', kopts)
-keymap('n', '<S-Up>', ':resize +5<CR>', kopts)
-keymap('n', '<S-Down>', ':resize -5<CR>', kopts)
-
--- Splitting and closing windows
-keymap('n', '<leader>v', '<C-w>v', kopts)
-keymap('n', '<leader>s', '<C-w>s', kopts)
-keymap('n', '<leader>x', '<C-w>c', kopts)
-keymap('n', '<leader>d', ':bp<CR>:bd#<CR>', kopts)
-
--- Move text up and down
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", kopts)
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", kopts)
-
--- Make Y behave like other capitals
-keymap("n", "Y", "y$", kopts)
-
--- Visual --
--- Stay in indent mode
-keymap("v", "<", "<gv", kopts)
-keymap("v", ">", ">gv", kopts)
-
--- fugitive
-keymap("n", '<C-g>', ':Git<CR>', kopts)
-keymap("n", '<leader>gd', ':Gdiff<CR>', kopts)
-keymap("n", '<leader>gb', ':Git blame<CR>', kopts)
-keymap("n", '<leader>gc', ':Git commit<CR>', kopts)
-keymap("n", '<leader>gw', ':Gwrite<CR>', kopts)
-
-vim.cmd('nmap <leader>bb :e $HOME/.bashrc<CR>')
-vim.cmd('nmap <leader>ba :e $HOME/dotfiles/bash/aliases<CR>')
-vim.cmd('nmap <leader>bc :e $HOME/dotfiles/bash/config<CR>')
-vim.cmd('nmap <leader>bl :e $HOME/dotfiles/bash/localrc<CR>')
-
-keymap('n', '<leader>l', ':set list!<CR>', kopts)
-keymap('n', '<leader>2', ':setlocal ts=2 sts=2 sw=2 et<CR>', kopts)
-keymap('n', '<leader>7', ':set tw=79<CR>', kopts)
-keymap('n', '<leader>t', ':tabe<CR>', kopts)
-keymap('n', '<leader>rc', ':tabe $MYVIMRC<CR>', kopts)
-keymap('n', '<leader>rs', ':so $MYVIMRC<CR>', kopts)
-keymap('n', '<leader>rt', ':tabe ~/.tmux.conf<CR>', kopts)
-
--- Copy to clipboard
-keymap('v', '<leader>y', '"+y', kopts)
-keymap('n', '<leader>Y', '"+yg_', kopts)
-keymap('n', '<leader>y', '"+y', kopts)
-keymap('n', '<leader>yy','"+yy', kopts)
-
--- Paste from clipboard
-keymap('n', '<leader>p', '"+p', kopts)
-keymap('n', '<leader>P', '"+P', kopts)
-keymap('v', '<leader>p', '"+p', kopts)
-keymap('v', '<leader>P', '"+Package', kopts)
+require('user.keymaps');
 
 -- dheeraj/telescope
 -- =================
@@ -507,3 +472,5 @@ vim.cmd('au BufWinLeave ?* silent! mkview')
 vim.cmd('au BufWinEnter ?* silent! loadview')
 vim.cmd('au TabLeave ?* silent! mkview')
 vim.cmd('au TabEnter ?* silent! loadview')
+
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
