@@ -23,18 +23,17 @@ require('packer').startup(function(use)
     },
   }
 
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
 
-    requires = { "nvim-lua/plenary.nvim" },
-  })
+    requires = { 'nvim-lua/plenary.nvim' },
+  }
 
-  use({
-    { 'williamboman/mason.nvim', config = require("user.mason") },
+  use {
+    { 'williamboman/mason.nvim', config = require 'user.mason' },
     'williamboman/mason-lspconfig.nvim',
-    "jayp0521/mason-null-ls.nvim",
-  })
-
+    'jayp0521/mason-null-ls.nvim',
+  }
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -83,9 +82,9 @@ require('packer').startup(function(use)
   end
 end)
 
-local null_ls = require("null-ls")
+local null_ls = require 'null-ls'
 
-null_ls.setup({
+null_ls.setup {
   sources = {
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.eslint,
@@ -93,7 +92,7 @@ null_ls.setup({
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.completion.spell,
   },
-})
+}
 
 -- When we are bootstrapping a configuration, it doesn't
 -- make sense to execute the rest of the init.lua.
@@ -368,12 +367,12 @@ require('fidget').setup()
 
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
-vim.g.copilot_tab_fallback = ""
+vim.g.copilot_tab_fallback = ''
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-require("luasnip.loaders.from_vscode").lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup {
   snippet = {
@@ -422,14 +421,14 @@ cmp.setup {
 
 -- dheeraj/options
 -- ===============
-vim.cmd('set directory=$HOME/.vim-swap/')
-vim.cmd('set viewdir=~/.vimviews')
+vim.cmd 'set directory=$HOME/.vim-swap/'
+vim.cmd 'set viewdir=~/.vimviews'
 
 local options = {
   autochdir = false,
   scrolloff = 5,
-  viewoptions = "folds,cursor",
-  shell = "/bin/bash",
+  viewoptions = 'folds,cursor',
+  shell = '/bin/bash',
   wrap = true,
   list = false,
   backspace = 'indent,eol,start',
@@ -443,34 +442,33 @@ local options = {
   ignorecase = true,
   smartcase = true,
   wildmenu = true,
-  wildignore = "*.swp,*.pyc,*.class",
+  wildignore = '*.swp,*.pyc,*.class',
 }
 --
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-if vim.fn.filereadable('.lvimrc') == 1 then
-  vim.cmd('source .lvimrc')
+if vim.fn.filereadable '.lvimrc' == 1 then
+  vim.cmd 'source .lvimrc'
 end
 
 -- dheeraj/keymaps
 -- ===============
-require('user.keymaps');
+require 'user.keymaps'
 
 -- dheeraj/telescope
 -- =================
 -- See `:help telescope` and `:help telescope.setup()`
-require('user.telescope')
+require 'user.telescope'
 -- require('user.solarized')
 
-vim.cmd('let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"')
-vim.cmd('let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"')
+vim.cmd 'let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"'
+vim.cmd 'let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"'
 
-
-vim.cmd('au BufWinLeave ?* silent! mkview')
-vim.cmd('au BufWinEnter ?* silent! loadview')
-vim.cmd('au TabLeave ?* silent! mkview')
-vim.cmd('au TabEnter ?* silent! loadview')
+vim.cmd 'au BufWinLeave ?* silent! mkview'
+vim.cmd 'au BufWinEnter ?* silent! loadview'
+vim.cmd 'au TabLeave ?* silent! mkview'
+vim.cmd 'au TabEnter ?* silent! loadview'
 
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

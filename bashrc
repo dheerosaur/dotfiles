@@ -13,3 +13,4 @@ fi
 
 PS1='$(__git_ps1 "[%s] ")\W \$ '
 eval "$(starship init bash)"
+. "$HOME/.cargo/env"
