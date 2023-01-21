@@ -40,6 +40,8 @@ require('packer').startup(function(use)
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   }
 
+  use 'rafamadriz/friendly-snippets'
+
   use { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     run = function()
@@ -67,6 +69,19 @@ require('packer').startup(function(use)
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
+  use 'wuelnerdotexe/vim-astro'
+  use 'pantharshit00/vim-prisma'
+
+  use {
+    'Pocco81/true-zen.nvim',
+    config = function()
+      require('true-zen').setup {
+        -- your config goes here
+        -- or just leave it empty :)
+      }
+    end,
+  }
+
   -- colorschemes
   use 'ishan9299/nvim-solarized-lua'
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
@@ -87,10 +102,9 @@ local null_ls = require 'null-ls'
 null_ls.setup {
   sources = {
     null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.eslint,
+    -- null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettier,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.completion.spell,
+    -- null_ls.builtins.diagnostics.eslint_d,
   },
 }
 
@@ -373,6 +387,7 @@ vim.g.copilot_tab_fallback = ''
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
+require('luasnip.loaders.from_snipmate').lazy_load { paths = { '~/.config/nvim/snippets' } }
 
 cmp.setup {
   snippet = {
@@ -411,8 +426,8 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'nvim_lsp' },
   },
 }
 
@@ -453,6 +468,10 @@ if vim.fn.filereadable '.lvimrc' == 1 then
   vim.cmd 'source .lvimrc'
 end
 
+if vim.fn.filereadable '.lvimrc.lua' == 1 then
+  require '.lvimrc'
+end
+
 -- dheeraj/keymaps
 -- ===============
 require 'user.keymaps'
@@ -472,3 +491,4 @@ vim.cmd 'au TabLeave ?* silent! mkview'
 vim.cmd 'au TabEnter ?* silent! loadview'
 
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.cmd 'let g:astro_typescript = "enable"'
