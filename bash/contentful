@@ -1,0 +1,46 @@
+function cf_list {
+  contentful space environment list | awk '{ print $2 }' | sed  '/^$/d' | tail -n +2
+}
+
+function cf_delete {
+  NAME=${1:-"^"}
+  cf_list | grep $NAME | fzf | xargs -I {} contentful space environment delete -e {}
+}
+
+function cf_version {
+  open "https://app.contentful.com/spaces/$CONTENTFUL_SPACE_ID/environments/master/entries/uhL5UZANMaXJrCDoP7D0U"
+}
+
+function cf_updates {
+   ROCO_DIR=~/work/mono/apps/roco
+   cd $ROCO_DIR/packages/cli-tools/contentful-scripts && yarn create-migrations
+   cd $ROCO_DIR/packages/modules/contentful-generated-types && yarn update-types
+   cd $ROCO_DIR && git status
+}
+
+function cf_envs {
+  cf "settings/environments"
+}
+
+function cf_models {
+  cf "environments/$CONTENTFUL_ENVIRONMENT_ID/content_types"
+}
+
+function cf_key {
+  cf "api/keys/$CONTENTFUL_API_TOKEN_ID"
+}
+
+function cf_start {
+  ENV_ID=$1;
+  if [ -z "$ENV_ID" ]; then
+    read -r -p "environment name: " ENV_ID
+  fi
+
+  SOURCE=${2:-master};
+  contentful space environment create --name $ENV_ID -e $ENV_ID --src $SOURCE --await-processing
+  contentful space environment use -e $ENV_ID
+  export CONTENTFUL_ENVIRONMENT_ID=$ENV_ID
+  sed -i '' 's/\(CONTENTFUL_ENVIRONMENT_ID\)="\(.*\)"/\1=$ENV_ID/g' .env
+  open "https://app.contentful.com/spaces/$CONTENTFUL_SPACE_ID/environments/$ENV_ID/content_types"
+  # open "https://app.contentful.com/spaces/$CONTENTFUL_SPACE_ID/api/keys/5tbn8IBPuEgNNSvjzFXwkZ"
+}
