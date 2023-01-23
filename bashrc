@@ -3,6 +3,7 @@ shopt -s histappend
 source ~/dotfiles/bash/aliases
 source ~/dotfiles/bash/config
 source ~/dotfiles/bash/completion
+source ~/dotfiles/bash/contentful
 source ~/.profile
 
 if [ -f ~/dotfiles/bash/localrc ]; then

@@ -1,3 +1,9 @@
+function cf {
+  DEFAULT="environments/$CONTENTFUL_ENVIRONMENT_ID";
+  ARGS=${1:-$DEFAULT}
+  open "https://app.contentful.com/spaces/$CONTENTFUL_SPACE_ID/$ARGS"
+}
+
 function cf_list {
   contentful space environment list | awk '{ print $2 }' | sed  '/^$/d' | tail -n +2
 }
