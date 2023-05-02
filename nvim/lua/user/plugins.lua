@@ -5,30 +5,18 @@ return function(use)
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-repeat'
   use 'editorconfig/editorconfig-vim'
-  use 'mattn/emmet-vim'
   use 'andymass/vim-matchup'
 
   use {
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  }
-
-  use({
-    "princejoogie/dir-telescope.nvim",
+    'princejoogie/dir-telescope.nvim',
     -- telescope.nvim is a required dependency
-    requires = { "nvim-telescope/telescope.nvim" },
-    branch = "dev",
+    requires = { 'nvim-telescope/telescope.nvim' },
+    branch = 'dev',
     config = function()
-      require("dir-telescope").setup({
+      require('dir-telescope').setup {
         hidden = true,
         respect_gitignore = true,
-      })
+      }
     end,
-  })
+  }
 end

@@ -48,6 +48,7 @@ require('packer').startup(function(use)
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   }
+  use 'nvim-treesitter/playground'
 
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -60,8 +61,8 @@ require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim'
 
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'numToStr/Comment.nvim'     -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'          -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -71,6 +72,7 @@ require('packer').startup(function(use)
 
   use 'wuelnerdotexe/vim-astro'
   use 'pantharshit00/vim-prisma'
+  use 'jose-elias-alvarez/typescript.nvim'
 
   use {
     'Pocco81/true-zen.nvim',
@@ -82,8 +84,31 @@ require('packer').startup(function(use)
     end,
   }
 
+  use {
+    'nvim-neotest/neotest',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'antoinemadec/FixCursorHold.nvim',
+      'haydenmeade/neotest-jest',
+    },
+    config = function()
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-jest' {
+            jestCommand = 'yarn test',
+            jestConfigFile = 'jest.config.ts',
+            env = { CI = true },
+            cwd = function()
+              return vim.fn.getcwd()
+            end,
+          },
+        },
+      }
+    end,
+  }
+
   -- colorschemes
-  use 'ishan9299/nvim-solarized-lua'
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/user/plugins.lua
@@ -101,10 +126,19 @@ local null_ls = require 'null-ls'
 
 null_ls.setup {
   sources = {
+    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.eslint.with { only_local = true },
     null_ls.builtins.formatting.stylua,
-    -- null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.formatting.prettier,
-    -- null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.code_actions.eslint,
+    null_ls.builtins.formatting.autoflake,
+    null_ls.builtins.formatting.autopep8,
+    -- null_ls.builtins.diagnostics.swiftlint,
+    null_ls.builtins.formatting.swiftformat,
+    -- null_ls.builtins.formatting.black,
+    -- null_ls.builtins.formatting.isort,
+    require 'typescript.extensions.null-ls.code-actions',
   },
 }
 
@@ -203,6 +237,14 @@ require('lualine').setup {
 -- Enable Comment.nvim
 require('Comment').setup()
 
+require('typescript').setup {
+  disable_commands = false, -- prevent the plugin from creating Vim commands
+  debug = false,            -- enable debug logging for commands
+  go_to_source_definition = {
+    fallback = true,        -- fall back to standard LSP definition on failure
+  },
+}
+
 -- Gitsigns
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {
@@ -276,6 +318,12 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+  },
 }
 
 -- Diagnostic keymaps
@@ -284,15 +332,21 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {})
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {})
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {})
 
+local LspSetup = require 'user.lsp_setup'
+
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
   --
   -- In this case, we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
+  if client.name == 'tsserver' then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -304,7 +358,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gd', LspSetup.lsp_definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
@@ -341,7 +395,7 @@ local servers = {
   -- rust_analyzer = {},
   -- tsserver = {},
 
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
@@ -387,7 +441,7 @@ vim.g.copilot_tab_fallback = ''
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
-require('luasnip.loaders.from_snipmate').lazy_load { paths = { '~/.config/nvim/snippets' } }
+require('luasnip.loaders.from_snipmate').lazy_load()
 
 cmp.setup {
   snippet = {
@@ -398,7 +452,7 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.complete {},
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -480,7 +534,6 @@ require 'user.keymaps'
 -- =================
 -- See `:help telescope` and `:help telescope.setup()`
 require 'user.telescope'
--- require('user.solarized')
 
 vim.cmd 'let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"'
 vim.cmd 'let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"'
@@ -490,5 +543,8 @@ vim.cmd 'au BufWinEnter ?* silent! loadview'
 vim.cmd 'au TabLeave ?* silent! mkview'
 vim.cmd 'au TabEnter ?* silent! loadview'
 
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.cmd 'let g:astro_typescript = "enable"'
+vim.cmd 'let g:astro_typescript = "enable"'
 vim.cmd 'let g:astro_typescript = "enable"'

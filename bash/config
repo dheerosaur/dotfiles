@@ -67,3 +67,5 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
 alias jqp='jqp --theme nord'
 export MANPAGER="bat -p -l man"
+
+source /opt/homebrew/opt/autoenv/activate.sh

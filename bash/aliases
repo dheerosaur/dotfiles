@@ -45,8 +45,10 @@ alias gdw="git diff --color-words"
 alias gco="git checkout"
 alias gc-="git checkout --"
 alias gup="git up"
+alias gcomp="git com-pull"
 alias github="command gh"
 alias gm="git checkout master"
+alias gmp="git checkout master && git pull"
 
 alias ga="git add"
 alias gcm="git commit -m"
@@ -60,6 +62,7 @@ alias gitmod="git ls-files -m"
 # git and fzf
 alias gcof="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git checkout"
 alias gdf="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git branch -D"
+alias gcf="git status --short | grep '^ M' | sed 's/^ M //' | fzf | xargs git checkout --"
 
 # Github
 alias ghd="gh pr list -A dheerosaur"
