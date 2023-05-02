@@ -75,6 +75,11 @@ require('packer').startup(function(use)
   use 'jose-elias-alvarez/typescript.nvim'
 
   use {
+    'evanleck/vim-svelte',
+    requires = { 'othree/html5.vim', 'pangloss/vim-javascript' },
+  }
+
+  use {
     'Pocco81/true-zen.nvim',
     config = function()
       require('true-zen').setup {
