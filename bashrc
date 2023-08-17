@@ -1,5 +1,11 @@
-shopt -s histappend
+# == Profiling start ==
+# PS4='+ $EPOCHREALTIME\011 '
+# exec 5> command.txt
+# BASH_XTRACEFD="5"
+# set -x
 
+# bash only commands
+shopt -s histappend
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 source ~/dotfiles/bash/aliases
@@ -12,6 +18,6 @@ if [ -f ~/dotfiles/bash/localrc ]; then
     source ~/dotfiles/bash/localrc
 fi
 
-PS1='$(__git_ps1 "[%s] ")\W \$ '
 eval "$(starship init bash)"
-. "$HOME/.cargo/env"
+# == Profiling ends ==
+# set +x

@@ -10,8 +10,8 @@ if [ -f "$HOME/bin/complete/tmuxinator.bash" ]; then
 	source ~/bin/complete/tmuxinator.bash
 fi
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-	source $(brew --prefix)/etc/bash_completion
+if [ -f /opt/homebrew/etc/bash_completion ]; then
+	source /opt/homebrew/etc/bash_completion
 fi
 
 if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then

@@ -1,3 +1,4 @@
+# vim: set filetype=bash
 export EDITOR='nvim'
 export VISUAL='nvim'
 
@@ -20,22 +21,15 @@ force_color_prompt=yes
 
 ########### Python ##################
 
-# virtualenvwrapper
-export PATH=$(pyenv root)/shims:~/bin/:/usr/local/bin:$PATH
-export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin":$PATH
 export PIP_DOWNLOAD_CACHE=~/.pip/cache
-
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=~/work
 
-#### FIG ENV VARIABLES ####
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
-
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - )"
-pyenv virtualenvwrapper_lazy
-
+# pyenv virtualenvwrapper_lazy
 [ -s "$HOME/.pythonstartup" ] && export PYTHONSTARTUP=$HOME/.pythonstartup
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
@@ -43,9 +37,10 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export GOPATH=$(go env GOPATH)
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:./node_modules/.bin
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -s "~/.cargo/env" ] && source "~/.cargo/env"
@@ -65,7 +60,6 @@ export FZF_CTRL_R_OPTS="--height 30%"
 export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
-alias jqp='jqp --theme nord'
 export MANPAGER="bat -p -l man"
 
 source /opt/homebrew/opt/autoenv/activate.sh

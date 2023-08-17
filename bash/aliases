@@ -1,6 +1,8 @@
 # Personal shortcuts
-alias e='nvim'
 alias vim='nvim'
+alias e='nvim'
+alias ea="NVIM_APPNAME=AstroNvim nvim"
+
 alias v='fd --type f --hidden --exclude .git | __fzf_select__ | xargs nvim'
 alias t="todo.sh"
 
@@ -42,6 +44,7 @@ alias gl="git hist"
 alias gb="git branch"
 alias gd="git diff --color"
 alias gdw="git diff --color-words"
+alias gdc="git diff --cached"
 alias gco="git checkout"
 alias gc-="git checkout --"
 alias gup="git up"
@@ -53,16 +56,19 @@ alias gmp="git checkout master && git pull"
 alias ga="git add"
 alias gcm="git commit -m"
 alias gca="git commit --amend"
+alias gcaa="git commit --amend --no-edit -a"
 alias gcam="git commit -am"
 alias gpus="git push"
 alias gpul="git pull"
 alias gsa="git stash"
 alias gitmod="git ls-files -m"
 
-# git and fzf
+# git
 alias gcof="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git checkout"
 alias gdf="git branch --sort=-committerdate | head -30 | fzf --height 10 | xargs git branch -D"
 alias gcf="git status --short | grep '^ M' | sed 's/^ M //' | fzf | xargs git checkout --"
+alias gaf="git status --short | grep '^ M' | sed 's/^ M //' | fzf | xargs git add"
+alias lg=lazygit
 
 # Github
 alias ghd="gh pr list -A dheerosaur"
@@ -82,12 +88,12 @@ alias djsh="dj shell"
 alias djshp="dj shell_plus"
 alias djdb="dj dbshell"
 
-# Shortcuts for web services
-alias myip="curl -s icanhazip.com | pbcopy"
-
-# find
 alias lct=fd
 alias ipy=ipython3
+alias jqp='jqp --theme nord'
+
+# Shortcuts for web services
+alias myip="curl -s icanhazip.com | pbcopy"
 
 function mcd() {
    mkdir $1 && cd $1;
@@ -121,5 +127,3 @@ function rawget {
 function gitignore () {
     curl https://www.gitignore.io/api/$@ ;
 }
-
-[ -s "$HOME/bin/z.sh" ] && source ~/bin/z.sh
