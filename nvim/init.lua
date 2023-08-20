@@ -16,7 +16,7 @@ require('packer').startup(function(use)
     requires = {
       -- Automatically install LSPs to stdpath for neovim
       -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
+      { 'j-hui/fidget.nvim', tag = 'legacy' },
 
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
@@ -96,10 +96,12 @@ require('packer').startup(function(use)
       'nvim-treesitter/nvim-treesitter',
       'antoinemadec/FixCursorHold.nvim',
       'haydenmeade/neotest-jest',
+      'marilari88/neotest-vitest',
     },
     config = function()
       require('neotest').setup {
         adapters = {
+          require 'neotest-vitest',
           require 'neotest-jest' {
             jestCommand = 'yarn test',
             jestConfigFile = 'jest.config.ts',
@@ -111,6 +113,23 @@ require('packer').startup(function(use)
         },
       }
     end,
+  }
+
+  use 'sindrets/diffview.nvim'
+
+  use 'almo7aya/openingh.nvim'
+
+  -- Unless you are still migrating, remove the deprecated commands from v1.x
+  vim.cmd [[ let g:neo_tree_remove_legacy_commands = 1 ]]
+
+  use {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+    },
   }
 
   -- colorschemes
@@ -177,9 +196,6 @@ vim.o.hlsearch = false
 -- Make line numbers default
 vim.wo.number = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -192,7 +208,7 @@ vim.o.smartcase = true
 
 -- Decrease update time
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = 'auto:2'
 
 -- Set colorscheme
 vim.o.termguicolors = true
@@ -261,6 +277,8 @@ require('gitsigns').setup {
     changedelete = { text = '~' },
   },
 }
+
+vim.treesitter.language.register('markdown', 'mdx')
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -540,6 +558,8 @@ require 'user.keymaps'
 -- See `:help telescope` and `:help telescope.setup()`
 require 'user.telescope'
 
+require 'user.neo-tree'
+
 vim.cmd 'let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"'
 vim.cmd 'let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"'
 
@@ -553,3 +573,9 @@ vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 vim.cmd 'let g:astro_typescript = "enable"'
 vim.cmd 'let g:astro_typescript = "enable"'
 vim.cmd 'let g:astro_typescript = "enable"'
+
+vim.filetype.add {
+  extension = {
+    mdx = 'mdx',
+  },
+}

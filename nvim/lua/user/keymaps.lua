@@ -9,6 +9,7 @@ vim.g.maplocalleader = '\\'
 
 -- Quick quitting
 keymap('n', '<leader>q', ':q<CR>', kopts)
+keymap('x', 'wq', '<C-z>', kopts)
 
 -- Resize windows vertically
 keymap('n', '<S-Right>', ':vertical:resize +5<CR>', kopts)
@@ -69,3 +70,6 @@ keymap('v', '<leader>P', '"+Package', kopts)
 keymap('n', '<leader>R', ':%s/<C-r><C-w>//g<Left><Left>', kopts)
 
 vim.api.nvim_create_user_command('Depfix', ':! yarn depfix', { desc = 'Fixes dependencies' })
+
+keymap('n', '<leader>e', '<cmd>Neotree toggle<cr>', kopts)
+keymap('n', ',r', ':Neotest run<CR>', kopts)
