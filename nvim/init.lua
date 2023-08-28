@@ -60,6 +60,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
+  use 'folke/tokyonight.nvim'     -- Fancier statusline
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'numToStr/Comment.nvim'     -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth'          -- Detect tabstop and shiftwidth automatically
@@ -132,9 +133,6 @@ require('packer').startup(function(use)
     },
   }
 
-  -- colorschemes
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-
   -- Add custom plugins to packer from ~/.config/nvim/lua/user/plugins.lua
   local has_plugins, plugins = pcall(require, 'user.plugins')
   if has_plugins then
@@ -150,18 +148,11 @@ local null_ls = require 'null-ls'
 
 null_ls.setup {
   sources = {
-    null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.eslint.with { only_local = true },
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.code_actions.eslint,
-    null_ls.builtins.formatting.autoflake,
-    null_ls.builtins.formatting.autopep8,
-    -- null_ls.builtins.diagnostics.swiftlint,
-    null_ls.builtins.formatting.swiftformat,
-    -- null_ls.builtins.formatting.black,
-    -- null_ls.builtins.formatting.isort,
     require 'typescript.extensions.null-ls.code-actions',
   },
 }
@@ -212,7 +203,7 @@ vim.wo.signcolumn = 'auto:2'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme tokyonight-night]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -413,11 +404,14 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
+  tsserver = {},
+  jsonls = {},
+  cssls = {},
+  yamlls = {},
+  eslint_d = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
