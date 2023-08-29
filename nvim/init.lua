@@ -411,7 +411,6 @@ local servers = {
   jsonls = {},
   cssls = {},
   yamlls = {},
-  eslint_d = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },

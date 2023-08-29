@@ -72,4 +72,5 @@ keymap('n', '<leader>R', ':%s/<C-r><C-w>//g<Left><Left>', kopts)
 vim.api.nvim_create_user_command('Depfix', ':! yarn depfix', { desc = 'Fixes dependencies' })
 
 keymap('n', '<leader>e', '<cmd>Neotree toggle<cr>', kopts)
+keymap('n', '<Esc>', '<cmd>nohlsearch<cr>', kopts)
 keymap('n', ',r', ':Neotest run<CR>', kopts)
