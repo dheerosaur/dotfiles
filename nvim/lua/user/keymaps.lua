@@ -8,7 +8,7 @@ vim.g.mapleader = '\\'
 vim.g.maplocalleader = '\\'
 
 -- Quick quitting
-keymap('n', '<leader>q', ':q<CR>', kopts)
+keymap('n', '<leader>q', '<C-z>', kopts)
 keymap('x', 'wq', '<C-z>', kopts)
 
 -- Resize windows vertically
