@@ -44,9 +44,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" --no-use # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH
+
 [ -s "~/.cargo/env" ] && source "~/.cargo/env"
 
-[ -s "$HOME/bin/z.sh" ] && source ~/bin/z.sh
 
 ssh-add -l > /dev/null 2>&1 || ssh-add
 
@@ -61,6 +64,7 @@ export FZF_CTRL_R_OPTS="--height 30%"
 export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
-export MANPAGER="bat -p -l man"
+export MANPAGER="vim -M +MANPAGER -"
 
+eval "$(zoxide init bash)"
 source /opt/homebrew/opt/autoenv/activate.sh

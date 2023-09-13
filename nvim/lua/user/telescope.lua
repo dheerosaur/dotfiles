@@ -63,6 +63,7 @@ telescope.setup {
 
 -- Telescope
 local builtin = require 'telescope.builtin'
+vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume telescope' })
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find using grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffer' })

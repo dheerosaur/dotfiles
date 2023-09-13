@@ -91,29 +91,8 @@ require('packer').startup(function(use)
   }
 
   use {
-    'nvim-neotest/neotest',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'antoinemadec/FixCursorHold.nvim',
-      'haydenmeade/neotest-jest',
-      'marilari88/neotest-vitest',
-    },
-    config = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-vitest',
-          require 'neotest-jest' {
-            jestCommand = 'yarn test',
-            jestConfigFile = 'jest.config.ts',
-            env = { CI = true },
-            cwd = function()
-              return vim.fn.getcwd()
-            end,
-          },
-        },
-      }
-    end,
+    'nvim-pack/nvim-spectre',
+    requires = { 'nvim-lua/plenary.nvim' },
   }
 
   use 'sindrets/diffview.nvim'
@@ -176,6 +155,11 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   command = 'source <afile> | PackerCompile',
   group = packer_group,
   pattern = vim.fn.expand '$MYVIMRC',
+})
+
+require('spectre').setup()
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = 'Toggle Spectre',
 })
 
 -- [[ Setting options ]]

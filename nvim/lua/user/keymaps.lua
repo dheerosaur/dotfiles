@@ -8,7 +8,7 @@ vim.g.mapleader = '\\'
 vim.g.maplocalleader = '\\'
 
 -- Quick quitting
-keymap('n', '<leader>q', '<C-z>', kopts)
+keymap('n', '<leader>q', '<cmd>quit<CR>', kopts)
 keymap('x', 'wq', '<C-z>', kopts)
 
 -- Resize windows vertically
@@ -41,6 +41,9 @@ keymap('n', '<leader>gd', ':Gdiff<CR>', kopts)
 keymap('n', '<leader>gb', ':Git blame<CR>', kopts)
 keymap('n', '<leader>gc', ':Git commit<CR>', kopts)
 keymap('n', '<leader>gw', ':Gwrite<CR>', kopts)
+
+-- diffview
+keymap('n', ',gd', '<cmd>DiffviewOpen<CR>', kopts)
 
 vim.cmd 'nmap <leader>bb :e $HOME/.bashrc<CR>'
 vim.cmd 'nmap <leader>ba :e $HOME/dotfiles/bash/aliases<CR>'

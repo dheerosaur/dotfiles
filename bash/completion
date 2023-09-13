@@ -10,9 +10,17 @@ if [ -f "$HOME/bin/complete/tmuxinator.bash" ]; then
 	source ~/bin/complete/tmuxinator.bash
 fi
 
-if [ -f "$HOME/bin/complete/moon.bash" ]; then
-	source ~/bin/complete/moon.bash
-fi
+# if [ -f "$HOME/bin/complete/moon.bash" ]; then
+# 	source ~/bin/complete/moon.bash
+# fi
+#
+# if [ -f "$HOME/bin/complete/turbo.bash" ]; then
+# 	source ~/bin/complete/turbo.bash
+# fi
+#
+# if [ -f "/opt/homebrew/share/bash-completion/completions/bun.completion.bash" ]; then
+# 	source /opt/homebrew/share/bash-completion/completions/bun.completion.bash
+# fi
 
 if [ -f /opt/homebrew/etc/bash_completion ]; then
 	source /opt/homebrew/etc/bash_completion
