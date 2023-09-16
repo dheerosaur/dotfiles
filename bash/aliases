@@ -2,6 +2,8 @@
 alias vim='nvim'
 alias e='nvim'
 alias ea="NVIM_APPNAME=AstroNvim nvim"
+alias el="NVIM_APPNAME=LazyVim nvim"
+alias ed="NVIM_APPNAME=DheeroVim nvim"
 
 alias v='fd --type f --hidden --exclude .git | __fzf_select__ | xargs nvim'
 alias t="todo.sh"

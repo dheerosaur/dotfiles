@@ -44,6 +44,7 @@ keymap('n', '<leader>gw', ':Gwrite<CR>', kopts)
 
 -- diffview
 keymap('n', ',gd', '<cmd>DiffviewOpen<CR>', kopts)
+keymap('n', ',gm', '<cmd>DiffviewOpen master<CR>', kopts)
 
 vim.cmd 'nmap <leader>bb :e $HOME/.bashrc<CR>'
 vim.cmd 'nmap <leader>ba :e $HOME/dotfiles/bash/aliases<CR>'
