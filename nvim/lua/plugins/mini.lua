@@ -20,10 +20,4 @@ return {
     event = 'VeryLazy',
     opts = {},
   },
-
-  {
-    'echasnovski/mini.pairs',
-    event = 'VeryLazy',
-    opts = {},
-  },
 }

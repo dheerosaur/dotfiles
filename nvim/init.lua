@@ -10,4 +10,5 @@ require('lazy').setup 'plugins'
 
 require 'user.setups'
 require 'user.telescope'
+require 'user.neo-tree'
 require 'user.auto'

@@ -3,7 +3,7 @@
 # exec 5> command.txt
 # BASH_XTRACEFD="5"
 # set -x
-
+# 
 # bash only commands
 shopt -s histappend
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

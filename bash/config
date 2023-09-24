@@ -50,8 +50,7 @@ export PATH=$BUN_INSTALL/bin:$PATH
 
 [ -s "~/.cargo/env" ] && source "~/.cargo/env"
 
-
-ssh-add -l > /dev/null 2>&1 || ssh-add
+# ssh-add -l > /dev/null 2>&1 || ssh-add
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --color=never --hidden'

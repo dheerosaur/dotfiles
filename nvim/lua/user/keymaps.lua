@@ -80,7 +80,12 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {})
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {})
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {})
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {})
 
 vim.api.nvim_create_user_command('Depfix', ':! yarn depfix', { desc = 'Fixes dependencies' })
+
+keymap('n', '<leader>e', '<cmd>Neotree toggle<cr>', 'Toggle Neotree')
+keymap('n', '<Esc>', '<cmd>nohlsearch<cr>', 'Clear search')
+
+-- diffview
+keymap('n', ',gd', '<cmd>DiffviewOpen<CR>', 'diffview')
+keymap('n', ',gm', '<cmd>DiffviewOpen master<CR>', 'diffview master')
