@@ -31,10 +31,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-alias ls="ls -G"
-alias lh="ls -lh"
-alias ll="ls -alF"
-alias la="ls -A"
+alias ls="exa"
+alias lh="exa -lh"
+alias ll="exa -alF"
+alias la="exa -A"
 
 # cd related
 alias ..=" cd .."
