@@ -32,7 +32,7 @@ keymap('v', '<', '<gv', 'Indent and stay')
 keymap('v', '>', '>gv', 'Indent and stay')
 
 -- fugitive
-keymap('n', '<C-g>', ':Git<CR>', 'Open fugitive')
+keymap('n', '<C-g>g', ':Git<CR>', 'Open fugitive')
 keymap('n', '<leader>gd', ':Gdiff<CR>', 'Git diff')
 keymap('n', '<leader>gb', ':Git blame<CR>', 'Git blame')
 keymap('n', '<leader>gc', ':Git commit<CR>', 'Git commit')
@@ -89,3 +89,36 @@ keymap('n', '<Esc>', '<cmd>nohlsearch<cr>', 'Clear search')
 -- diffview
 keymap('n', ',gd', '<cmd>DiffviewOpen<CR>', 'diffview')
 keymap('n', ',gm', '<cmd>DiffviewOpen master<CR>', 'diffview master')
+
+local function gpKeyOptions(desc)
+  return {
+    noremap = true,
+    silent = true,
+    nowait = true,
+    desc = 'GPT prompt ' .. desc,
+  }
+end
+
+-- Chat commands
+vim.keymap.set({ 'n', 'i' }, '<C-g>c', '<cmd>GpChatNew<cr>', gpKeyOptions 'New Chat')
+vim.keymap.set({ 'n', 'i' }, '<C-g>t', '<cmd>GpChatToggle<cr>', gpKeyOptions 'Toggle Popup Chat')
+vim.keymap.set({ 'n', 'i' }, '<C-g>f', '<cmd>GpChatFinder<cr>', gpKeyOptions 'Chat Finder')
+
+vim.keymap.set('v', '<C-g>c', ":<C-u>'<,'>GpChatNew<cr>", gpKeyOptions 'Visual Chat New')
+vim.keymap.set('v', '<C-g>v', ":<C-u>'<,'>GpChatPaste<cr>", gpKeyOptions 'Visual Chat Paste')
+vim.keymap.set('v', '<C-g>t', ":<C-u>'<,'>GpChatToggle<cr>", gpKeyOptions 'Visual Popup Chat')
+
+-- Prompt commands
+vim.keymap.set({ 'n', 'i' }, '<C-g>r', '<cmd>GpRewrite<cr>', gpKeyOptions 'Inline Rewrite')
+vim.keymap.set({ 'n', 'i' }, '<C-g>a', '<cmd>GpAppend<cr>', gpKeyOptions 'Append')
+vim.keymap.set({ 'n', 'i' }, '<C-g>b', '<cmd>GpPrepend<cr>', gpKeyOptions 'Prepend')
+vim.keymap.set({ 'n', 'i' }, '<C-g>e', '<cmd>GpEnew<cr>', gpKeyOptions 'Enew')
+vim.keymap.set({ 'n', 'i' }, '<C-g>p', '<cmd>GpPopup<cr>', gpKeyOptions 'Popup')
+
+vim.keymap.set('v', '<C-g>r', ":<C-u>'<,'>GpRewrite<cr>", gpKeyOptions 'Visual Rewrite')
+vim.keymap.set('v', '<C-g>a', ":<C-u>'<,'>GpAppend<cr>", gpKeyOptions 'Visual Append')
+vim.keymap.set('v', '<C-g>b', ":<C-u>'<,'>GpPrepend<cr>", gpKeyOptions 'Visual Prepend')
+vim.keymap.set('v', '<C-g>e', ":<C-u>'<,'>GpEnew<cr>", gpKeyOptions 'Visual Enew')
+vim.keymap.set('v', '<C-g>p', ":<C-u>'<,'>GpPopup<cr>", gpKeyOptions 'Visual Popup')
+
+vim.keymap.set({ 'n', 'i', 'v', 'x' }, '<C-g>s', '<cmd>GpStop<cr>', gpKeyOptions 'Stop')

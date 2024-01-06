@@ -61,8 +61,9 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Find using grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffer' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
-vim.keymap.set('n', '<leader>fd', builtin.live_grep, { desc = 'Find diagnostics' })
+vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find diagnostics' })
 vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find keymaps' })
+vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Resume Telescope' })
 
 -- Ctrl-P like commands
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
@@ -70,7 +71,10 @@ vim.keymap.set('n', '<C-k>', builtin.oldfiles, { desc = '[?] Find recently opene
 vim.keymap.set('n', '<C-j>', builtin.buffers, {})
 
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader><space>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>fw', function ()
+  builtin.live_grep { default_text = vim.fn.expand '<cword>' }
+end, { desc = 'Telescope current word' }
+)
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {

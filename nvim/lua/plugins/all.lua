@@ -50,6 +50,7 @@ return {
 
   'nvim-lualine/lualine.nvim', -- Fancier statusline
   'tpope/vim-sleuth',          -- Detect tabstop and shiftwidth automatically
+  'folke/zen-mode.nvim',
 
   'jose-elias-alvarez/typescript.nvim',
 
@@ -71,9 +72,39 @@ return {
   },
 
   {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'haydenmeade/neotest-jest',
+    },
+    config = function()
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-jest' {
+            jestCommand = 'jest --watch',
+            jestConfigFile = 'jest.config.ts',
+            env = { CI = true },
+            cwd = function(path)
+              local file = vim.fn.expand '%:p'
+              if string.find(file, '/packages/') then
+                print(string.match(file, '(.-/[^/]+/)online-visit') .. 'online-visit')
+                return string.match(file, '(.-/[^/]+/)online-visit') .. 'online-visit'
+              end
+              return vim.fn.getcwd()
+            end,
+          },
+        },
+      }
+    end,
+  },
+
+  {
     'nvim-pack/nvim-spectre',
     dependencies = { 'nvim-lua/plenary.nvim' },
   },
+
+  { 'akinsho/toggleterm.nvim', version = '*', config = true },
 
   {
     'kylechui/nvim-surround',
@@ -101,12 +132,29 @@ return {
   {
     'robitx/gp.nvim',
     config = function()
-      require('gp').setup()
-
-      -- or setup with your own config (see Install > Configuration in Readme)
-      -- require("gp").setup(conf)
-
-      -- shortcuts might be setup here (see Usage > Shortcuts in Readme)
+      require('gp').setup {
+        hooks = {
+          ImportByFile = function(gp, params)
+            local template = 'Having following code that imports components from a single export file'
+                .. '```{{selection}}\n```\n\n'
+                .. 'Split them into separate lines importing from their own files like this:\n\n'
+                .. "```import { Paragraph } from '@healthbyro/design-system/Paragraph}'\n```\n\n"
+            gp.Prompt(params, gp.Target.rewrite, nil, gp.config.command_model, template, gp.config.command_system_prompt)
+          end,
+          EnzymeToRTL = function(gp, params)
+            local template = 'Having following enzyme test code from {{filename}}:\n\n'
+                .. '```{{filetype}}\n{{selection}}\n```\n\n'
+                .. 'Write the tests using react-testing-library.\n'
+            gp.Prompt(params, gp.Target.rewrite, nil, gp.config.command_model, template, gp.config.command_system_prompt)
+          end,
+          ReactFunctional = function(gp, params)
+            local template = 'Having following React class based component from {{filename}}:\n\n'
+                .. '```{{filetype}}\n{{selection}}\n```\n\n'
+                .. 'Rewrite it as a functional component using TypeScript. Prefer named functions over arrow functions'
+            gp.Prompt(params, gp.Target.rewrite, nil, gp.config.command_model, template, gp.config.command_system_prompt)
+          end,
+        },
+      }
     end,
   },
 }
